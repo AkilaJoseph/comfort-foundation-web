@@ -354,3 +354,33 @@ img[loading="lazy"]:not([aria-hidden="true"]) { background: #f3f1f2; }
   -webkit-mask-size: 100% 100%;          mask-size: 100% 100%;
   -webkit-mask-position: center;         mask-position: center;
 }
+
+/* --- team cards: uniform portraits ---------------------------------------
+   main.css sizes the photo by width alone (plus a 260px min-height floor) and
+   never sets object-fit, so every card inherited its source image's own
+   aspect ratio. Mixed uploads — tall portraits, landscape snaps, screenshots
+   — produced cards of wildly different heights and a ragged grid.
+
+   Pin one portrait box for every photo and cover it. `cover` fills the frame
+   without distorting the face, and anchoring to the top of the frame is what
+   guarantees a head is never cropped: on a landscape source the sides are
+   trimmed instead, and on a tall one the excess comes off the bottom. */
+.team .team__single-thumb a {
+  display: block;
+  aspect-ratio: 3 / 4;
+}
+.team .team__single-thumb img {
+  width: 100%; height: 100%;
+  min-height: 0;                /* clear the template's 260px floor */
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Keep every card the same height even when a role title wraps to two lines,
+   so the photo strip across a row stays level. */
+.team .team__single-wrapper { height: 100%; }
+.team .team__single {
+  height: 100%;
+  display: flex; flex-direction: column;
+}
+.team .team__single-content { flex: 1 1 auto; }

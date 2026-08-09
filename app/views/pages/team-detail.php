@@ -1,7 +1,7 @@
 <?php /** @var array $member */ $others = array_slice(array_filter(team_members(), static fn($m) => $m['id'] !== $member['id']), 0, 3); ?>
 <?php partial('page-banner', ['heading' => $member['name'], 'eyebrow' => $member['role_title'], 'crumbs' => ['Team' => 'team', $member['name'] => null]]); ?>
 
-<section style="padding:100px 0;">
+<section class="team" style="padding:100px 0;">
     <div class="container">
         <div class="row gutter-40">
             <div class="col-12 col-lg-5">
