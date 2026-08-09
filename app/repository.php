@@ -1,0 +1,342 @@
+<?php
+/**
+ * Comfort Foundation — content queries.
+ * Every read the front end performs lives here.
+ */
+
+declare(strict_types=1);
+
+// ---------------------------------------------------------------------
+//  Settings
+// ---------------------------------------------------------------------
+
+/** All settings as key => value, loaded once per request. */
+function settings(): array
+{
+    static $cache = null;
+    if ($cache !== null) {
+        return $cache;
+    }
+    $cache = [];
+    if (db_ready()) {
+        foreach (all('SELECT key_name, value FROM settings') as $r) {
+            $cache[$r['key_name']] = $r['value'];
+        }
+    }
+    return $cache;
+}
+
+/** A single setting with a fallback. */
+function setting(string $key, string $default = ''): string
+{
+    $s = settings();
+    $v = $s[$key] ?? '';
+    return ($v === null || $v === '') ? $default : (string) $v;
+}
+
+function settings_grouped(): array
+{
+    $out = [];
+    foreach (all('SELECT * FROM settings ORDER BY sort_order, key_name') as $r) {
+        $out[$r['group_name']][] = $r;
+    }
+    return $out;
+}
+
+/** Social links that have actually been filled in. */
+function social_links(): array
+{
+    $map = [
+        'facebook'  => ['social_facebook',  'fa-brands fa-facebook-f', 'Facebook'],
+        'twitter'   => ['social_twitter',   'fa-brands fa-twitter',    'X (Twitter)'],
+        'instagram' => ['social_instagram', 'fa-brands fa-instagram',  'Instagram'],
+        'linkedin'  => ['social_linkedin',  'fa-brands fa-linkedin-in','LinkedIn'],
+        'youtube'   => ['social_youtube',   'fa-brands fa-youtube',    'YouTube'],
+    ];
+    $out = [];
+    foreach ($map as $key => [$settingKey, $icon, $label]) {
+        $url = setting($settingKey);
+        if ($url !== '') {
+            $out[] = ['url' => $url, 'icon' => $icon, 'label' => $label];
+        }
+    }
+    return $out;
+}
+
+// ---------------------------------------------------------------------
+//  Programmes
+// ---------------------------------------------------------------------
+
+function programs(int $limit = 0): array
+{
+    $sql = 'SELECT * FROM programs WHERE is_published = 1 ORDER BY sort_order, id';
+    if ($limit > 0) {
+        $sql .= ' LIMIT ' . (int) $limit;
+    }
+    return all($sql);
+}
+
+function program_by_slug(string $slug): ?array
+{
+    return one('SELECT * FROM programs WHERE slug = ? AND is_published = 1 LIMIT 1', [$slug]);
+}
+
+// ---------------------------------------------------------------------
+//  News / posts
+// ---------------------------------------------------------------------
+
+function posts(int $limit = 6, int $offset = 0, ?int $categoryId = null, string $search = ''): array
+{
+    $sql = 'SELECT p.*, c.name AS category_name, c.slug AS category_slug
+              FROM posts p
+         LEFT JOIN categories c ON c.id = p.category_id
+             WHERE p.is_published = 1';
+    $params = [];
+    if ($categoryId) {
+        $sql     .= ' AND p.category_id = ?';
+        $params[] = $categoryId;
+    }
+    if ($search !== '') {
+        $sql     .= ' AND (p.title LIKE ? OR p.excerpt LIKE ? OR p.body LIKE ?)';
+        $like     = '%' . $search . '%';
+        $params[] = $like;
+        $params[] = $like;
+        $params[] = $like;
+    }
+    $sql .= ' ORDER BY p.published_at DESC, p.id DESC LIMIT ' . (int) $limit . ' OFFSET ' . (int) $offset;
+    return all($sql, $params);
+}
+
+function posts_count(?int $categoryId = null, string $search = ''): int
+{
+    $sql    = 'SELECT COUNT(*) FROM posts WHERE is_published = 1';
+    $params = [];
+    if ($categoryId) {
+        $sql     .= ' AND category_id = ?';
+        $params[] = $categoryId;
+    }
+    if ($search !== '') {
+        $sql     .= ' AND (title LIKE ? OR excerpt LIKE ? OR body LIKE ?)';
+        $like     = '%' . $search . '%';
+        $params[] = $like;
+        $params[] = $like;
+        $params[] = $like;
+    }
+    return (int) scalar($sql, $params, 0);
+}
+
+function post_by_slug(string $slug): ?array
+{
+    return one(
+        'SELECT p.*, c.name AS category_name, c.slug AS category_slug
+           FROM posts p
+      LEFT JOIN categories c ON c.id = p.category_id
+          WHERE p.slug = ? AND p.is_published = 1
+          LIMIT 1',
+        [$slug]
+    );
+}
+
+function post_neighbours(int $id, ?string $publishedAt): array
+{
+    $prev = one('SELECT slug, title FROM posts WHERE is_published = 1 AND id < ? ORDER BY id DESC LIMIT 1', [$id]);
+    $next = one('SELECT slug, title FROM posts WHERE is_published = 1 AND id > ? ORDER BY id ASC  LIMIT 1', [$id]);
+    return ['prev' => $prev, 'next' => $next];
+}
+
+function categories_with_counts(): array
+{
+    return all(
+        'SELECT c.id, c.slug, c.name, COUNT(p.id) AS total
+           FROM categories c
+      LEFT JOIN posts p ON p.category_id = c.id AND p.is_published = 1
+       GROUP BY c.id, c.slug, c.name
+       ORDER BY c.name'
+    );
+}
+
+function category_by_slug(string $slug): ?array
+{
+    return one('SELECT * FROM categories WHERE slug = ? LIMIT 1', [$slug]);
+}
+
+// ---------------------------------------------------------------------
+//  Events
+// ---------------------------------------------------------------------
+
+function events(int $limit = 6, int $offset = 0, string $when = 'all'): array
+{
+    $sql = 'SELECT * FROM events WHERE is_published = 1';
+    if ($when === 'upcoming') {
+        $sql .= ' AND (starts_at IS NULL OR starts_at >= NOW())';
+    } elseif ($when === 'past') {
+        $sql .= ' AND starts_at < NOW()';
+    }
+    $dir  = ($when === 'past') ? 'DESC' : 'ASC';
+    $sql .= " ORDER BY starts_at {$dir}, id DESC LIMIT " . (int) $limit . ' OFFSET ' . (int) $offset;
+    return all($sql);
+}
+
+function events_count(string $when = 'all'): int
+{
+    $sql = 'SELECT COUNT(*) FROM events WHERE is_published = 1';
+    if ($when === 'upcoming') {
+        $sql .= ' AND (starts_at IS NULL OR starts_at >= NOW())';
+    } elseif ($when === 'past') {
+        $sql .= ' AND starts_at < NOW()';
+    }
+    return (int) scalar($sql, [], 0);
+}
+
+function event_by_slug(string $slug): ?array
+{
+    return one('SELECT * FROM events WHERE slug = ? AND is_published = 1 LIMIT 1', [$slug]);
+}
+
+// ---------------------------------------------------------------------
+//  Team
+// ---------------------------------------------------------------------
+
+function team_members(int $limit = 0): array
+{
+    $sql = 'SELECT * FROM team_members WHERE is_published = 1 ORDER BY sort_order, id';
+    if ($limit > 0) {
+        $sql .= ' LIMIT ' . (int) $limit;
+    }
+    return all($sql);
+}
+
+function team_member_by_slug(string $slug): ?array
+{
+    return one('SELECT * FROM team_members WHERE slug = ? AND is_published = 1 LIMIT 1', [$slug]);
+}
+
+// ---------------------------------------------------------------------
+//  Everything else
+// ---------------------------------------------------------------------
+
+function gallery_items(int $limit = 0): array
+{
+    $sql = 'SELECT * FROM gallery ORDER BY sort_order, id DESC';
+    if ($limit > 0) {
+        $sql .= ' LIMIT ' . (int) $limit;
+    }
+    return all($sql);
+}
+
+function gallery_categories(): array
+{
+    return array_column(all('SELECT DISTINCT category FROM gallery ORDER BY category'), 'category');
+}
+
+function impact_stats(): array
+{
+    return all('SELECT * FROM impact_stats ORDER BY sort_order, id');
+}
+
+function partners(): array
+{
+    return all('SELECT * FROM partners ORDER BY sort_order, id');
+}
+
+function testimonials(): array
+{
+    return all('SELECT * FROM testimonials ORDER BY sort_order, id');
+}
+
+function faqs(): array
+{
+    return all('SELECT * FROM faqs ORDER BY sort_order, id');
+}
+
+/**
+ * The three-step approach model (EQUIP / STRENGTHEN / TRANSFORM).
+ * Fixed strategic content — lives in code rather than the database.
+ */
+function approach_steps(): array
+{
+    return [
+        [
+            'key'   => 'equip',
+            'title' => 'Equip',
+            'text'  => 'We build practical economic and life skills by giving women the tools they need for financial independence. Through hands-on training, savings groups, and enterprise support, we equip women to earn, save, and grow.',
+        ],
+        [
+            'key'   => 'strengthen',
+            'title' => 'Strengthen',
+            'text'  => 'We strengthen families from within. Through parenting education, caregiver support, and father engagement, we build the knowledge and bonds that make families safe, stable, and resilient.',
+        ],
+        [
+            'key'   => 'transform',
+            'title' => 'Transform',
+            'text'  => 'We invest in children\'s emotional futures. Through safe spaces, psychosocial support, and community mental health awareness, we help children grow up emotionally healthy, protected, and ready to lead.',
+        ],
+    ];
+}
+
+/** Core values, straight from the organisational profile. */
+function core_values(): array
+{
+    return [
+        ['icon' => 'icon-spread-love',   'title' => 'Dignity',        'text' => 'We uphold the worth and rights of every woman, girl, and child we serve.'],
+        ['icon' => 'icon-support-heart', 'title' => 'Resilience',     'text' => 'We build lasting strength in individuals and communities.'],
+        ['icon' => 'icon-fund',          'title' => 'Integrity',      'text' => 'We act with transparency and accountability in all we do.'],
+        ['icon' => 'icon-donation',      'title' => 'Women-Centered', 'text' => 'Women\'s voices, needs, and leadership are at the heart of everything.'],
+        ['icon' => 'icon-health',        'title' => 'Protection',     'text' => 'We create safe, trusted environments for children and families.'],
+        ['icon' => 'icon-heart-hand',    'title' => 'Partnership',    'text' => 'We grow through honest, trust-based collaboration at every level.'],
+    ];
+}
+
+/** Who our programmes are designed for and with. */
+function beneficiaries(): array
+{
+    return [
+        'Women and girls (primary focus), particularly those facing economic vulnerability and limited access to opportunities',
+        'Adolescent girls and young women aged 14–35 in vocational and leadership programmes',
+        'Mothers and caregivers seeking parenting skills and family resilience support',
+        'Children aged 0–18 receiving psychosocial and mental health support',
+        'Community leaders, teachers, and local health workers as key programme partners',
+    ];
+}
+
+/** Partnership strategy, from the organisational profile. */
+function partnership_types(): array
+{
+    return [
+        ['title' => 'Government Agencies',            'text' => 'Ministry of Health, Ministry of Community Development, Gender and Social Welfare, and local government authorities — aligning our programmes with national priorities.'],
+        ['title' => 'Schools & Health Facilities',    'text' => 'Delivering programmes where communities already gather and already trust.'],
+        ['title' => 'NGOs & Civil Society',           'text' => 'Collaborating to reduce duplication and amplify collective impact.'],
+        ['title' => 'International Development Partners', 'text' => 'Seeking grants and technical support from aligned foundations and bilateral agencies.'],
+        ['title' => 'Private Sector',                 'text' => 'Engaging businesses in livelihood training, market linkages, and co-funding.'],
+    ];
+}
+
+/** Expected five-year impact, from the organisational profile. */
+function long_term_impact(): array
+{
+    return [
+        'Thousands of women and girls with sustainable livelihoods, income, and financial independence.',
+        'Families equipped with parenting knowledge and support systems that reduce stress and strengthen bonds.',
+        'Children growing up with access to emotional support, safe spaces, and positive mental health.',
+        'Communities where women are recognised as economic leaders and agents of family and social change.',
+        'A replicable, women-centered model for integrated community development across Tanzania.',
+    ];
+}
+
+// ---------------------------------------------------------------------
+//  Submissions
+// ---------------------------------------------------------------------
+
+function store_submission(string $kind, array $data): int
+{
+    return insert_row('submissions', [
+        'kind'    => $kind,
+        'name'    => mb_substr($data['name']    ?? '', 0, 190),
+        'email'   => mb_substr($data['email']   ?? '', 0, 190),
+        'phone'   => mb_substr($data['phone']   ?? '', 0, 60),
+        'subject' => mb_substr($data['subject'] ?? '', 0, 220),
+        'message' => $data['message'] ?? '',
+        'payload' => isset($data['payload']) ? json_encode($data['payload'], JSON_UNESCAPED_UNICODE) : null,
+        'ip'      => client_ip(),
+    ]);
+}

@@ -1,0 +1,115 @@
+# =====================================================================
+#  Comfort Foundation — server configuration
+#  Apache 2.4 / LiteSpeed (cPanel-compatible)
+# =====================================================================
+
+Options -Indexes
+DirectoryIndex index.php index.html
+
+# ---------------------------------------------------------------------
+#  Pretty URLs — send everything that is not a real file to index.php
+# ---------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # If the site lives in a subfolder, uncomment and adjust.
+    # Must match 'base_path' in app/config.php (with a trailing slash here).
+    RewriteBase /comfort-foundation-web/
+
+    # Force HTTPS (enable once your SSL certificate is installed)
+    # RewriteCond %{HTTPS} !=on
+    # RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Block application internals. Dir-relative, so this is subfolder-safe
+    # (unlike RedirectMatch, which always matches from the domain root).
+    RewriteRule ^(app|storage|database|tools)(/|$) - [F,L]
+
+    # Strip a trailing slash (except the site root). No leading slash on the
+    # target, so RewriteBase supplies the correct subfolder prefix.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+)/$ $1 [L,R=301]
+
+    # Never rewrite the admin area or real files
+    RewriteRule ^admin(/.*)?$ - [L]
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# ---------------------------------------------------------------------
+#  Compression
+# ---------------------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript text/javascript
+    AddOutputFilterByType DEFLATE application/json application/xml application/rss+xml
+    AddOutputFilterByType DEFLATE image/svg+xml application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE font/ttf font/otf
+</IfModule>
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---------------------------------------------------------------------
+#  Caching — assets are fingerprinted with ?v=, so a long TTL is safe
+# ---------------------------------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault                        "access plus 1 month"
+    ExpiresByType text/html               "access plus 0 seconds"
+    ExpiresByType image/webp              "access plus 1 year"
+    ExpiresByType image/svg+xml           "access plus 1 year"
+    ExpiresByType image/png               "access plus 1 year"
+    ExpiresByType image/jpeg              "access plus 1 year"
+    ExpiresByType image/x-icon            "access plus 1 year"
+    ExpiresByType text/css                "access plus 1 year"
+    ExpiresByType text/javascript         "access plus 1 year"
+    ExpiresByType application/javascript  "access plus 1 year"
+    ExpiresByType font/woff2              "access plus 1 year"
+    ExpiresByType font/woff               "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(webp|png|jpe?g|gif|svg|ico|css|js|woff2?|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+        Header unset ETag
+    </FilesMatch>
+    FileETag None
+
+    # ---- security headers ----
+    Header always set X-Content-Type-Options   "nosniff"
+    Header always set X-Frame-Options          "SAMEORIGIN"
+    Header always set Referrer-Policy          "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy       "geolocation=(), microphone=(), camera=()"
+    Header always unset X-Powered-By
+</IfModule>
+
+# ---------------------------------------------------------------------
+#  MIME types
+# ---------------------------------------------------------------------
+<IfModule mod_mime.c>
+    AddType image/webp                 .webp
+    AddType font/woff2                 .woff2
+    AddType image/svg+xml              .svg
+    AddType application/x-font-ttf     .ttf
+</IfModule>
+
+# ---------------------------------------------------------------------
+#  Protect application internals
+# ---------------------------------------------------------------------
+<FilesMatch "^(config\.php|config\.example\.php|composer\.(json|lock)|\.env|.*\.sql|.*\.md)$">
+    Require all denied
+</FilesMatch>
+
+# app/ storage/ database/ tools/ are blocked by the dir-relative RewriteRule
+# above. The old root-anchored RedirectMatch rules were removed: they only
+# match from the domain root and silently protected nothing on a subfolder
+# install. Each of those folders also ships its own .htaccess as a fallback
+# for servers without mod_rewrite.
+
+# Must include the subfolder prefix, or Apache serves its own 404 instead.
+ErrorDocument 404 /comfort-foundation-web/index.php

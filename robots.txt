@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /app/
+Disallow: /storage/
+Disallow: /database/
+Disallow: /tools/
+Disallow: /search
+
+Sitemap: /sitemap.xml

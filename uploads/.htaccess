@@ -1,0 +1,7 @@
+php_flag engine off
+<FilesMatch "\.(php|phtml|php[0-9]|pl|py|cgi|sh)$">
+    Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>

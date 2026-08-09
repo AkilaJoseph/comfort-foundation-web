@@ -1,0 +1,328 @@
+/* ==========================================================================
+   Comfort Foundation — brand theme
+   Overrides the Charifund template palette with the Foundation identity.
+   Magenta #9E1F63 · Green #21B24B · Ink #231F20
+   ========================================================================== */
+
+:root {
+  /* --- brand palette --- */
+  --cf-magenta:        #9E1F63;
+  --cf-magenta-dark:   #7C184E;
+  --cf-magenta-deep:   #7A1749;
+  --cf-magenta-soft:   #F6E9F0;
+  /* readable tint of the brand magenta for use on dark backgrounds */
+  --cf-magenta-light:  #E86FA8;
+  --cf-green:          #21B24B;
+  --cf-green-dark:     #1A8F3C;
+  --cf-green-soft:     #E9F7ED;
+  --cf-ink:            #231F20;
+  --cf-ink-soft:       #5A5254;
+
+  /* --- remap the template's variables ---
+     --base-color is the template's global accent: buttons, links, icons,
+     hovers and the ::before/::after fills all key off it. Setting it to the
+     logo magenta is what actually makes magenta the primary colour — the
+     earlier `.btn--primary { background-color: var(--cf-magenta) }` could
+     never show, because the pseudo-element fills paint over it at rest.
+     Green stays on as the secondary accent (see the contrast block at the
+     end of this file, which is required: the template assumes dark text on
+     the accent, and #9E1F63 is far too dark for that). */
+  --base-color:        #9E1F63;
+  --primary-color:     #9E1F63;
+  --secondary-color:   #231F20;
+  --tertiary-color:    #21B24B;
+  --quaternary-color:  #7A1749;
+  --quinary-color:     #1A1416;
+  --septenary-color:   #231F20;
+  --hover-color:       #7A1749;
+  --template-color:    #5A5254;
+
+  --primary-six:       #21B24B;
+  --primary-six-title: #231F20;
+  --primary-six-light: #231F20;
+  --primary-seven-heading: #231F20;
+  --primary-seven-text:    #5A5254;
+  --primary-seven-body:    #FBF7F9;
+  --primary-eight:     #9E1F63;
+}
+
+/* the template tints these shape images via a filter chain — retune to brand green */
+.base-img {
+  -webkit-filter: brightness(0) saturate(100%) invert(80%) sepia(20%) saturate(2767%) hue-rotate(75deg) brightness(73%) contrast(84%);
+          filter: brightness(0) saturate(100%) invert(80%) sepia(20%) saturate(2767%) hue-rotate(75deg) brightness(73%) contrast(84%);
+}
+.brand-img--magenta {
+  -webkit-filter: brightness(0) saturate(100%) invert(42%) sepia(99%) saturate(6453%) hue-rotate(314deg) brightness(64%) contrast(87%);
+          filter: brightness(0) saturate(100%) invert(42%) sepia(99%) saturate(6453%) hue-rotate(314deg) brightness(64%) contrast(87%);
+}
+
+/* --- logo sizing ------------------------------------------------------- */
+.navbar-logo img,
+.mobile-menu__header .logo img { max-height: 66px; width: auto; }
+.footer-two__widget-logo img   { max-height: 78px; width: auto; }
+@media (max-width: 575px) {
+  .navbar-logo img { max-height: 52px; }
+}
+
+/* The img[loading="lazy"] placeholder tint at the bottom of this file paints
+   a light grey behind every lazy image. The logos are transparent PNG/WebP,
+   so on the dark footer that tint showed up as a grey box around the mark. */
+.navbar-logo img,
+.mobile-menu__header .logo img,
+.footer-two__widget-logo img { background: none; }
+
+/* The header container runs to 1800px with only the 12px Bootstrap gutter,
+   which left the logo almost touching the viewport edge while the nav pill
+   sat comfortably inboard. Give both ends room that scales with the screen. */
+.header-secondary .container { padding-inline: clamp(16px, 2.5vw, 48px); }
+
+/* --- buttons ----------------------------------------------------------- */
+.btn--primary            { background-color: var(--cf-magenta); border-color: var(--cf-magenta); }
+.btn--primary:hover,
+.btn--primary:focus      { background-color: var(--cf-magenta-deep); border-color: var(--cf-magenta-deep); }
+.btn--secondary          { background-color: var(--cf-green); border-color: var(--cf-green); color: #fff; }
+.btn--secondary:hover    { background-color: var(--cf-green-dark); border-color: var(--cf-green-dark); }
+.btn--tertiary           { background-color: var(--cf-green); border-color: var(--cf-green); color: #fff; }
+.btn--tertiary:hover     { background-color: var(--cf-green-dark); border-color: var(--cf-green-dark); }
+
+/* --- accents ----------------------------------------------------------- */
+.sub-title               { color: var(--cf-green); }
+.sub-title i             { color: var(--cf-green); }
+h1 span, h2 span, h3 span,
+.section__header h2 span { color: var(--cf-magenta); }
+.bottom-line             { color: var(--cf-magenta); }
+a:hover                  { color: var(--cf-magenta); }
+.preloader               { background-color: var(--cf-ink); }
+.preloader i, .preloader p { color: var(--cf-green); }
+
+/* progress + odometer accents */
+.progress-bar-percent    { background-color: var(--cf-green); }
+.circle-progress         { stroke: var(--cf-magenta); }
+.percent-value           { color: var(--cf-magenta); }
+
+/* --- topbar / footer --------------------------------------------------- */
+.topbar--secondary       { background-color: var(--cf-ink); }
+.footer-two              { background-color: var(--cf-ink); }
+.footer-two__copyright   { border-top: 1px solid rgba(255,255,255,.10); }
+
+/* --- section tints ----------------------------------------------------- */
+.cf-tint-magenta         { background-color: var(--cf-magenta-soft); }
+.cf-tint-green           { background-color: var(--cf-green-soft); }
+
+/* --- pillar / value cards (Comfort-specific blocks) -------------------- */
+.cf-pillar {
+  position: relative; height: 100%; padding: 40px 32px 34px;
+  border-radius: 20px; background: #fff;
+  border: 1px solid rgba(35,31,32,.08);
+  box-shadow: 0 10px 30px rgba(35,31,32,.05);
+  transition: transform .4s ease, box-shadow .4s ease, border-color .4s ease;
+}
+.cf-pillar:hover { transform: translateY(-8px); box-shadow: 0 20px 45px rgba(158,31,99,.14); border-color: rgba(158,31,99,.25); }
+.cf-pillar__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  font-weight: 800; font-size: 20px; letter-spacing: .5px;
+  background: var(--cf-magenta-soft); color: var(--cf-magenta); margin-bottom: 22px;
+}
+.cf-pillar--green .cf-pillar__num { background: var(--cf-green-soft); color: var(--cf-green-dark); }
+.cf-pillar h4, .cf-pillar h5 { margin-bottom: 12px; }
+.cf-pillar h4 a, .cf-pillar h5 a { color: inherit; }
+.cf-pillar h4 a:hover, .cf-pillar h5 a:hover { color: var(--cf-magenta); }
+.cf-pillar p { margin-bottom: 0; }
+.cf-pillar__link { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; font-weight: 700; color: var(--cf-magenta); }
+.cf-pillar__link i { transition: transform .3s ease; }
+.cf-pillar__link:hover i { transform: translateX(4px); }
+
+/* --- EQUIP / STRENGTHEN / TRANSFORM band ------------------------------- */
+.cf-approach { background: var(--cf-ink); color: rgba(255,255,255,.78); }
+.cf-approach h2, .cf-approach h3, .cf-approach h4 { color: #fff; }
+.cf-approach__step { padding: 34px 30px; border-radius: 18px; height: 100%;
+  background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.10); }
+.cf-approach__step h4 { letter-spacing: 2px; text-transform: uppercase; font-size: 22px; }
+.cf-approach__step--equip h4      { color: var(--cf-green); }
+.cf-approach__step--strengthen h4 { color: #E86FA8; }
+.cf-approach__step--transform h4  { color: var(--cf-green); }
+.cf-approach__step p { color: rgba(255,255,255,.72); margin-bottom: 0; }
+
+/* --- fact strip -------------------------------------------------------- */
+.cf-facts { border-radius: 20px; background: #fff; box-shadow: 0 14px 40px rgba(35,31,32,.07); padding: 8px 0; }
+.cf-facts__item { padding: 26px 20px; text-align: center; border-right: 1px solid rgba(35,31,32,.08); }
+.cf-facts__item:last-child { border-right: 0; }
+.cf-facts__item h3 { color: var(--cf-magenta); margin-bottom: 4px; }
+.cf-facts__item p  { margin-bottom: 0; font-weight: 600; color: var(--cf-ink-soft); }
+@media (max-width: 767px) { .cf-facts__item { border-right: 0; border-bottom: 1px solid rgba(35,31,32,.08); } }
+
+/* --- give / bank details ---------------------------------------------- */
+.cf-give-card { border-radius: 20px; padding: 34px; background: #fff;
+  border: 1px solid rgba(35,31,32,.08); box-shadow: 0 12px 34px rgba(35,31,32,.06); height: 100%; }
+.cf-give-card h5 { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.cf-give-card h5 i { color: var(--cf-green); }
+.cf-give-row { display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding: 12px 0; border-bottom: 1px dashed rgba(35,31,32,.14); }
+.cf-give-row:last-of-type { border-bottom: 0; }
+.cf-give-row span:first-child { color: var(--cf-ink-soft); font-size: 15px; }
+.cf-give-row strong { color: var(--cf-ink); font-size: 16px; }
+.cf-copy-btn { border: 0; background: var(--cf-magenta-soft); color: var(--cf-magenta);
+  border-radius: 8px; padding: 6px 12px; font-size: 13px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+.cf-copy-btn:hover { background: var(--cf-magenta); color: #fff; }
+
+/* --- alerts ------------------------------------------------------------ */
+.cf-alert { border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; font-weight: 600; }
+.cf-alert--ok   { background: var(--cf-green-soft); color: var(--cf-green-dark); border: 1px solid rgba(33,178,75,.3); }
+.cf-alert--err  { background: #FDECEC; color: #B3261E; border: 1px solid rgba(179,38,30,.25); }
+.cf-alert ul { margin: 8px 0 0 18px; }
+
+/* --- misc utility ------------------------------------------------------ */
+.cf-prose h2, .cf-prose h3, .cf-prose h4 { margin: 34px 0 14px; }
+.cf-prose h2:first-child, .cf-prose h3:first-child { margin-top: 0; }
+.cf-prose p  { margin-bottom: 18px; }
+.cf-prose ul { margin: 0 0 22px 20px; }
+.cf-prose li { margin-bottom: 10px; list-style: disc; }
+.cf-prose img { max-width: 100%; height: auto; border-radius: 14px; margin: 12px 0 24px; }
+.cf-prose blockquote { border-left: 4px solid var(--cf-magenta); padding: 6px 0 6px 22px; margin: 24px 0;
+  font-size: 19px; font-style: italic; color: var(--cf-ink); }
+
+.cf-empty { text-align: center; padding: 60px 20px; color: var(--cf-ink-soft); }
+.cf-empty i { font-size: 46px; color: var(--cf-magenta); opacity: .35; display: block; margin-bottom: 16px; }
+
+img { max-width: 100%; }
+
+/* Placeholder tint so lazy photos do not flash blank while loading. It must
+   never apply to decorative overlays, which are transparent — the footer
+   sparkles are absolutely positioned over the contact details, so the tint
+   painted a solid grey rectangle across the address. Every such image is
+   marked aria-hidden, which makes a reliable opt-out. */
+img[loading="lazy"]:not([aria-hidden="true"]) { background: #f3f1f2; }
+
+/* --- footer contact widget ---------------------------------------------
+   main.css styles this list only via `--contact a`, and sets `gap` and
+   `align-items` without ever declaring a flex container, so the icons and
+   text were never actually laid out. The opening-hours row is a <span>
+   rather than an <a>, so it picked up no colour at all and rendered in the
+   near-black body colour, and as an unsized block it collapsed to
+   min-content width — one word per line. Lay the row out explicitly and
+   give the <span> the same treatment as its <a> siblings. */
+.footer-two__widget-content--contact ul { margin: 0; padding: 0; list-style: none; }
+.footer-two .footer-two__widget .footer-two__widget-content--contact li > a,
+.footer-two .footer-two__widget .footer-two__widget-content--contact li > span {
+  display: flex; align-items: flex-start; gap: 12px;
+  /* min-width:0 lets the text wrap normally instead of shrinking to the
+     longest word; flex:1 stops it collapsing inside the row. */
+  flex: 1 1 auto; min-width: 0; color: #949d9c; line-height: 1.6;
+  /* main.css lowercases these links, which mangles the address and place
+     names. The values are already correctly cased in the settings table. */
+  text-transform: none;
+}
+.footer-two .footer-two__widget .footer-two__widget-content--contact li > a:hover { color: var(--base-color); }
+.footer-two .footer-two__widget .footer-two__widget-content--contact li > a > i,
+.footer-two .footer-two__widget .footer-two__widget-content--contact li > span > i {
+  flex: 0 0 18px; width: 18px; margin-top: 4px;
+  color: var(--base-color); font-size: 17px; text-align: center;
+}
+
+/* --- grid gutters ------------------------------------------------------
+   main.css defines .gutter-12/24/30/40/60 but not .gutter-20, which our
+   three form grids (donate, volunteer, partner) use. Without it those rows
+   had no row-gap, so every wrapped line of fields sat flush against the one
+   above and the columns read as one solid block. Same convention as above. */
+.gutter-20 { row-gap: 20px; }
+
+/* --- page banner -------------------------------------------------------
+   main.css only styles `.common-banner h2`, but our banner partial uses an
+   <h1> (one per page, for SEO/a11y). Without this the heading fell back to
+   the dark body colour and was unreadable on the dark banner. */
+.common-banner h1 { color: var(--white); font-weight: 800; }
+
+/* The breadcrumb previously borrowed `.footer__bottom-list`, whose rules are
+   all scoped under `.footer`, so outside the footer it inherited nothing —
+   the crumbs stacked vertically in near-invisible dark text. */
+.common-banner__crumbs { display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 10px; margin: 14px 0 0; padding: 0; list-style: none; }
+.common-banner__crumbs li { margin: 0; list-style: none; }
+.common-banner__crumbs a { color: var(--white); transition: var(--transition); }
+.common-banner__crumbs a:hover { color: var(--base-color); }
+.common-banner__crumbs span { color: rgba(255, 255, 255, .72); }
+.common-banner__crumbs .sep { color: rgba(255, 255, 255, .45); }
+
+/* --- primary colour contrast -------------------------------------------
+   The template pairs a --base-color background with dark text (it assumes a
+   light green accent). With the accent now magenta #9E1F63 that text has to
+   flip to white or it is unreadable. These are exactly the rules in main.css
+   that set `background: var(--base-color)` together with a dark `color`. */
+.award .award__single .content .award__thumb a,
+.blog .blog__single-thumb .tag a:hover,
+.blog-main .blog__single-thumb .tag a:hover,
+.blog-main .details-footer .tag-wrapper a:hover,
+.btn--primary,
+.btn--secondary:hover,
+.btn--tertiary:hover,
+.cause .thumb .tag a,
+.cause-two .cause-two__slider-single .cause-thumb a:hover,
+.cm-details .cm-sidebar-widget .tag-wrapper a:hover,
+.contact-main .social a:hover,
+.donation-future .donation-future__thumb .btn--primary:hover,
+.fc-testimonial .slider-navigation .slider-btn-next,
+.footer-two .footer-two__widget .social a:hover,
+.gallery__single a,
+.main-pagination .active,
+.main-pagination a:hover,
+.main-pagination button:hover,
+.mega-menu .mega-content .btn--secondary:hover,
+.mobile-menu .mobile-menu__social a:hover,
+.off-canvas .social a:hover,
+.preloader i,
+.search-popup .close-search,
+.sidebar-cart .cart-item-single .measure button,
+.slider-navigation .slider-btn-next,
+.slider-navigation .slider-btn:hover,
+.team .team__single:hover .team__single-content__icon,
+.team .team__single__thumb-social a:hover,
+.team-three .team__single-content__icon { color: #fff; }
+
+.btn--primary path, .btn--primary svg path { fill: #fff; }
+
+/* Green remains the secondary accent so the logo's second colour still reads
+   in the design rather than the site going monochrome magenta. */
+.btn--tertiary { background-color: var(--cf-green); border-color: var(--cf-green); color: #fff; }
+
+/* The hero banner sits on near-black (#091f1b). Magenta is too dark to read
+   there, so the eyebrow keeps the brighter green. */
+.common-banner .sub-title,
+.common-banner .sub-title i { color: var(--cf-green); }
+
+/* --- header nav on the magenta pill -------------------------------------
+   .header-secondary .navbar__menu-wrapper takes its background from
+   --base-color, now #9E1F63, but the links keep the template's hardcoded
+   #16171a and hover to --hover-color (#7A1749) — both unreadable on it.
+   The earlier contrast pass missed this because the background and the text
+   colour are declared in two separate rules rather than one.
+
+   Direct-child combinators are load-bearing here: .navbar__sub-menu is a
+   white dropdown whose links must stay dark, and it lives inside
+   .navbar__item, so a descendant selector would whiten those too. */
+.header-secondary .navbar__menu-wrapper .navbar__list > .navbar__item > a { color: #fff; }
+.header-secondary .navbar__menu-wrapper .navbar__list > .navbar__item > a:hover,
+.header-secondary .navbar__menu-wrapper .navbar__list > .navbar__item--has-children:hover > .navbar__dropdown-label { color: rgba(255, 255, 255, .75); }
+
+/* The caret that points from the pill down into the dropdown was tinted
+   --hover-color, which vanished against the magenta. White matches the
+   dropdown panel it belongs to. */
+.header-secondary .navbar__menu-wrapper .navbar__item .dropdown-label-alter::before { border-bottom-color: #fff; }
+
+/* --- footer links on dark ------------------------------------------------
+   The footer sits on --cf-ink (#231F20). main.css colours its links with
+   --base-color, which was a bright green and is now #9E1F63 — dark magenta
+   on near-black, far too low-contrast to read. Use a lightened tint of the
+   brand magenta so the identity carries but the text stays legible. */
+.footer-two .footer-two__copyright-inner p a,
+.footer-two .footer-two__widget li a:hover,
+.footer-two .footer-two__widget .footer-two__widget-content--contact li > a:hover { color: var(--cf-magenta-light); }
+.footer-two .footer-two__copyright-inner p a:hover { color: #fff; }
+
+/* --- build credit -------------------------------------------------------- */
+.cf-credit {
+  margin-top: 6px;
+  font-size: 14px; font-weight: 500;
+  color: rgba(255, 255, 255, .55);
+}
+.footer-two .footer-two__copyright-inner p.cf-credit { font-weight: 500; color: rgba(255, 255, 255, .55); }
