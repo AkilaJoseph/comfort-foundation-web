@@ -365,11 +365,16 @@ img[loading="lazy"]:not([aria-hidden="true"]) { background: #f3f1f2; }
    without distorting the face, and anchoring to the top of the frame is what
    guarantees a head is never cropped: on a landscape source the sides are
    trimmed instead, and on a tall one the excess comes off the bottom. */
-.team .team__single-thumb a {
+   The `>` combinators are essential: the hover social icons are also <a>
+   elements inside .team__single-thumb, so a descendant selector hands them
+   display:block and a 3/4 ratio too — which flattens their flex centring and
+   stretches the 40px circles into ovals. Only the photo link is a direct
+   child, so restrict both rules to it. */
+.team .team__single-thumb > a {
   display: block;
   aspect-ratio: 3 / 4;
 }
-.team .team__single-thumb img {
+.team .team__single-thumb > a > img {
   width: 100%; height: 100%;
   min-height: 0;                /* clear the template's 260px floor */
   object-fit: cover;
