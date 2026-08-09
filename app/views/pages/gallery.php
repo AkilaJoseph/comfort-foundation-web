@@ -19,7 +19,15 @@
         <div class="row gutter-30" id="cfGallery">
             <?php foreach ($items as $i => $g): ?>
             <div class="col-12 col-sm-6 col-lg-4 cf-gallery-item" data-category="<?= e(slugify($g['category'])) ?>" style="margin-bottom:30px;">
-                <a href="<?= e(media($g['image'])) ?>" class="cf-lightbox" title="<?= e($g['title']) ?>" style="display:block;border-radius:16px;overflow:hidden;position:relative;">
+                <?php
+                // Grids use the -card variant to stay light; the lightbox should
+                // open the full-size -wide version when one has been uploaded.
+                $full = preg_replace('~-card\.webp$~', '-wide.webp', (string) $g['image']);
+                if (!is_file(CF_ROOT . '/' . ltrim((string) $full, '/'))) {
+                    $full = $g['image'];
+                }
+                ?>
+                <a href="<?= e(media($full)) ?>" class="cf-lightbox" title="<?= e($g['title']) ?>" style="display:block;border-radius:16px;overflow:hidden;position:relative;">
                     <?= img($g['image'], ['alt' => $g['title'] ?: 'Comfort Foundation gallery image', 'class' => 'w-100']) ?>
                 </a>
                 <?php if (!empty($g['title'])): ?>

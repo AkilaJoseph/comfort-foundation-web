@@ -11,17 +11,17 @@ $slides = [
     [
         'eyebrow' => 'Women-centered community development',
         'title'   => 'Equipping women. Strengthening <span class="bottom-line">families</span>. Protecting children.',
-        'bg'      => 'assets/images/banner/banner-one-bg.webp',
+        'bg'      => 'uploads/media/cf-savings-group-meeting-wide.webp',
     ],
     [
         'eyebrow' => 'Economic empowerment',
         'title'   => 'When a woman <span class="bottom-line">earns</span>, a whole household rises with her.',
-        'bg'      => 'assets/images/banner/banner-bg.webp',
+        'bg'      => 'uploads/media/cf-market-vendor-wide.webp',
     ],
     [
         'eyebrow' => 'Children\'s mental health',
         'title'   => 'Every child deserves to grow up <span class="bottom-line">safe</span> and emotionally healthy.',
-        'bg'      => 'assets/images/banner/banner-three-bg.webp',
+        'bg'      => 'uploads/media/cf-children-learning-circle-wide.webp',
     ],
 ];
 ?>
@@ -220,7 +220,7 @@ $slides = [
             </div>
             <div class="col-12 col-xxl-4">
                 <div class="cta-section__center cta-section__single">
-                    <div class="cta-img"><img src="<?= e(asset('assets/images/cta/two.webp')) ?>" alt="Comfort Foundation community work" class="parallax-image" loading="lazy"></div>
+                    <div class="cta-img"><img src="<?= e(asset('uploads/media/cf-tailoring-workshop-wide.webp')) ?>" alt="Women at work in a Comfort Foundation tailoring group" class="parallax-image" loading="lazy"></div>
                 </div>
             </div>
             <div class="col-12 col-xxl-4">

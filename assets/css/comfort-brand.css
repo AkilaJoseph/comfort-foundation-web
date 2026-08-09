@@ -326,3 +326,31 @@ img[loading="lazy"]:not([aria-hidden="true"]) { background: #f3f1f2; }
   color: rgba(255, 255, 255, .55);
 }
 .footer-two .footer-two__copyright-inner p.cf-credit { font-weight: 500; color: rgba(255, 255, 255, .55); }
+
+/* --- home "get involved" CTA band ----------------------------------------
+   .cta-section__center paints a torn-paper frame behind a masked photo.
+   Two faults:
+
+   1. The frame is a background stretched with `background-size: 100% 100%`,
+      but the photo's mask-image had no mask-size, so it stayed at the
+      asset's natural 428px. Whenever the panel grew taller than that the
+      photo was clipped and the frame showed through as a solid block.
+   2. The frame asset (cta/mask-two.webp) is solid #FFC107 amber — the
+      original template's accent, which clashes with the brand palette.
+
+   Rather than ship a recoloured copy of the asset, reuse it as a mask over
+   a brand-coloured layer, so the torn edge follows --cf-magenta from here on. */
+.cta-section .cta-section__center { background-image: none; }
+.cta-section .cta-section__center::before {
+  content: ""; position: absolute; inset: 0; z-index: -3;
+  background-color: var(--cf-magenta);
+  -webkit-mask-image: url("../images/cta/mask-two.webp");
+          mask-image: url("../images/cta/mask-two.webp");
+  -webkit-mask-size: 100% 100%;          mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;        mask-repeat: no-repeat;
+}
+/* Stretch the photo's mask to match the frame it sits inside. */
+.cta-section .cta-section__center .cta-img {
+  -webkit-mask-size: 100% 100%;          mask-size: 100% 100%;
+  -webkit-mask-position: center;         mask-position: center;
+}
