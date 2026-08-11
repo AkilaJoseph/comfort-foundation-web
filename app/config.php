@@ -20,7 +20,11 @@ return [
     // Base URL path the site is served from.
     //   site at  https://example.org/          ->  ''
     //   site at  https://example.org/comfort/  ->  '/comfort'
-    'base_path' => '/comfort-foundation-web',
+    // 'auto' derives it from the front controller's location, so one config is
+    // correct in the /comfort-foundation-web subfolder, on the port-8080
+    // review vhost (served from root) and on the live domain. Set an explicit
+    // path here only if you need to override that.
+    'base_path' => 'auto',
 
     // Full canonical URL, used for share links, sitemap and og:url.
     'site_url'  => 'https://comfortfoundation.or.tz',
@@ -34,7 +38,7 @@ return [
     'mail_from' => 'website@comfortfoundation.or.tz',
 
     // ---- behaviour ------------------------------------------------
-    'debug'      => true,    // true = show PHP errors (development only)
+    'debug'      => false,   // true = show PHP errors (development only)
     'cache'      => true,    // full-page HTML cache for anonymous visitors
     'cache_ttl'  => 900,     // seconds
 

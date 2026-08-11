@@ -12,9 +12,10 @@ DirectoryIndex index.php index.html
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # If the site lives in a subfolder, uncomment and adjust.
-    # Must match 'base_path' in app/config.php (with a trailing slash here).
-    RewriteBase /comfort-foundation-web/
+    # No RewriteBase on purpose. Every rule below uses a directory-relative
+    # pattern and target, so Apache resolves them against whatever path this
+    # .htaccess is reached through — the subfolder, the root vhost used for
+    # review, or the live domain. Hardcoding a base breaks the other two.
 
     # Force HTTPS (enable once your SSL certificate is installed)
     # RewriteCond %{HTTPS} !=on
@@ -25,10 +26,15 @@ DirectoryIndex index.php index.html
     # (unlike RedirectMatch, which always matches from the domain root).
     RewriteRule ^(app|storage|database|tools)(/|$) - [F,L]
 
-    # Strip a trailing slash (except the site root). No leading slash on the
-    # target, so RewriteBase supplies the correct subfolder prefix.
+    # Strip a trailing slash (except on real directories, which covers both
+    # site roots). The target is taken from REQUEST_URI rather than written
+    # relative: with no RewriteBase, a relative target on an external redirect
+    # resolves against the filesystem and leaks /C:/xampp/htdocs/... into the
+    # Location header. %1 is REQUEST_URI minus its trailing slash, so it is
+    # already root-relative and correct at any mount point.
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.+)/$ $1 [L,R=301]
+    RewriteCond %{REQUEST_URI} ^(.*[^/])/$
+    RewriteRule ^ %1 [L,R=301]
 
     # Never rewrite the admin area or real files
     RewriteRule ^admin(/.*)?$ - [L]
@@ -111,5 +117,6 @@ DirectoryIndex index.php index.html
 # install. Each of those folders also ships its own .htaccess as a fallback
 # for servers without mod_rewrite.
 
-# Must include the subfolder prefix, or Apache serves its own 404 instead.
-ErrorDocument 404 /comfort-foundation-web/index.php
+# No ErrorDocument here: it only accepts a root-relative URL, which would be
+# wrong on any mount point but one. The rewrite above already sends every
+# non-file request to index.php, which renders the styled 404 itself.

@@ -87,10 +87,32 @@ function safe_html(?string $html): string
 //  URLs & assets
 // ---------------------------------------------------------------------
 
-/** Base path the site is mounted on, e.g. '' or '/comfort'. */
+/**
+ * Base path the site is mounted on, e.g. '' or '/comfort'.
+ *
+ * Set 'base_path' => 'auto' in config.php to derive it from the front
+ * controller's own location. That keeps one codebase correct whether it is
+ * served from a domain root or a subfolder, with no config edit on deploy.
+ */
 function base_path(): string
 {
-    return rtrim((string) ($GLOBALS['cf_config']['base_path'] ?? ''), '/');
+    $configured = (string) ($GLOBALS['cf_config']['base_path'] ?? '');
+    if ($configured !== 'auto') {
+        return rtrim($configured, '/');
+    }
+
+    static $auto = null;
+    if ($auto === null) {
+        // Pretty URLs all rewrite to index.php, so SCRIPT_NAME is the mount
+        // point regardless of the requested route: /sub/index.php => /sub.
+        $dir = rtrim(str_replace('\\', '/', dirname((string) ($_SERVER['SCRIPT_NAME'] ?? ''))), '/');
+        // admin/index.php and admin/crud.php sit one level deeper.
+        if (str_ends_with($dir, '/admin')) {
+            $dir = substr($dir, 0, -6);
+        }
+        $auto = ($dir === '/' || $dir === '.') ? '' : $dir;
+    }
+    return $auto;
 }
 
 /** Build a site URL: url('news/my-post') => '/news/my-post'. */

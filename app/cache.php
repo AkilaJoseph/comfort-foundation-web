@@ -34,7 +34,13 @@ function cache_dir(): string
 
 function cache_file(string $route): string
 {
-    return cache_dir() . '/page_' . sha1($route === '' ? 'home' : $route) . '.html';
+    // The mount point belongs in the key. Every asset and link in the cached
+    // HTML is prefixed with base_path(), so a page rendered under
+    // /comfort-foundation-web is wrong when replayed on a root vhost (and the
+    // reverse). Without this the port-80 and port-8080 mounts poison each
+    // other's cache and the styling silently breaks on whichever was second.
+    $key = base_path() . '|' . ($route === '' ? 'home' : $route);
+    return cache_dir() . '/page_' . sha1($key) . '.html';
 }
 
 /** Serve a fresh cached copy if one exists. Returns true when served. */
