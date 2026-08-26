@@ -7,9 +7,9 @@
             <div class="col-12 col-lg-6">
                 <div class="help__thumb"><div class="help__thumb-inner">
                     <div class="thumb-lg thumb" data-aos="fade-right" data-aos-duration="1000">
-                        <img src="<?= e(asset('assets/images/help/thumb-lg.webp')) ?>" alt="Comfort Foundation programme participants in Mwanza" loading="lazy" decoding="async">
+                        <img src="<?= e(asset('uploads/media/help-thumb-lg.webp')) ?>" alt="Comfort Foundation programme participants in Mwanza" loading="lazy" decoding="async">
                     </div>
-                    <div class="thumb thumb-bottom"><img src="<?= e(asset('assets/images/help/thumb-bottom.webp')) ?>" alt="Community members at a Comfort Foundation session" loading="lazy" decoding="async"></div>
+                    <div class="thumb thumb-bottom"><img src="<?= e(asset('uploads/media/help-thumb-bottom.webp')) ?>" alt="Community members at a Comfort Foundation session" loading="lazy" decoding="async"></div>
                     <div class="grid-line"><img src="<?= e(asset('assets/images/help/grid.webp')) ?>" alt="" class="base-img" loading="lazy" aria-hidden="true"></div>
                 </div></div>
             </div>

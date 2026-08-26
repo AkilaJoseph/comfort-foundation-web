@@ -74,11 +74,11 @@ $slides = [
             <div class="col-12 col-lg-5 col-xxl-6 d-none d-lg-block">
                 <div class="help__thumb">
                     <div class="help__thumb-inner">
-                        <div class="thumb-top thumb"><img src="<?= e(asset('assets/images/help/thumb-top.webp')) ?>" alt="Women in a community training session" loading="lazy" decoding="async"></div>
+                        <div class="thumb-top thumb"><img src="<?= e(asset('uploads/media/help-thumb-top.webp')) ?>" alt="Women in a community training session" loading="lazy" decoding="async"></div>
                         <div class="thumb-lg thumb" data-aos="fade-left" data-aos-duration="1000">
-                            <img src="<?= e(asset('assets/images/help/thumb-lg.webp')) ?>" alt="Comfort Foundation programme participants" loading="lazy" decoding="async">
+                            <img src="<?= e(asset('uploads/media/help-thumb-lg.webp')) ?>" alt="Comfort Foundation programme participants" loading="lazy" decoding="async">
                         </div>
-                        <div class="thumb thumb-bottom"><img src="<?= e(asset('assets/images/help/thumb-bottom.webp')) ?>" alt="Children in a safe space" loading="lazy" decoding="async"></div>
+                        <div class="thumb thumb-bottom"><img src="<?= e(asset('uploads/media/help-thumb-bottom.webp')) ?>" alt="Children in a safe space" loading="lazy" decoding="async"></div>
                         <div class="line"><img src="<?= e(asset('assets/images/help/line.webp')) ?>" alt="" loading="lazy" aria-hidden="true"></div>
                         <div class="grid-line"><img src="<?= e(asset('assets/images/help/grid.webp')) ?>" alt="" class="base-img" loading="lazy" aria-hidden="true"></div>
                         <div class="vertical-text"><h5>Equip &middot; <span>Strengthen</span> &middot; Transform</h5></div>

@@ -11,8 +11,8 @@ return [
     'db' => [
         'host'    => 'localhost',
         'name'    => 'comfort_foundation',
-        'user'    => 'root',
-        'pass'    => '',
+        'user'    => 'akila',
+        'pass'    => '0020',
         'charset' => 'utf8mb4',
     ],
 
@@ -38,8 +38,8 @@ return [
     'mail_from' => 'website@comfortfoundation.or.tz',
 
     // ---- behaviour ------------------------------------------------
-    'debug'      => false,   // true = show PHP errors (development only)
-    'cache'      => true,    // full-page HTML cache for anonymous visitors
+    'debug'      => true,   // true = show PHP errors (development only)
+    'cache'      => false,    // full-page HTML cache for anonymous visitors
     'cache_ttl'  => 900,     // seconds
 
     // Serve the concatenated+minified bundles from assets/dist instead of
