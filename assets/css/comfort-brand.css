@@ -390,3 +390,24 @@ img[loading="lazy"]:not([aria-hidden="true"]) { background: #f3f1f2; }
   display: flex; flex-direction: column;
 }
 .team .team__single-content { flex: 1 1 auto; }
+
+/* --- "who we are" photo collage: pin the frame, not the file ------------
+   main.css never sets a width on `.help__thumb-inner .thumb img` — with no
+   CSS width, height:auto (the global `img` rule) falls away too, and the
+   box renders at the source file's own pixel dimensions. The original
+   theme images happened to be exactly the size this layout was designed
+   around (thumb-lg 462x544, thumb-top 237x228, thumb-bottom 230x219), so
+   the bug was invisible until a higher-resolution photo — 2x, for a sharp
+   retina render — was dropped in: the frame doubled with it, thumb-top
+   ballooned to nearly the size of thumb-lg, and the whole collage lost its
+   layered composition. Pinning the frame here means any future upload,
+   through the admin cropper or otherwise, gets scaled and cropped to the
+   design's intended box instead of dictating it. */
+.help .help__thumb-inner .thumb-top img    { width: 237px; height: 228px; object-fit: cover; }
+.help .help__thumb-inner .thumb-lg img     { width: 462px; height: 544px; object-fit: cover; }
+.help .help__thumb-inner .thumb-bottom img { width: 230px; height: 219px; object-fit: cover; }
+@media (max-width: 575px) {
+  .help .help__thumb-inner .thumb-top img    { width: 150px; height: 144px; }
+  .help .help__thumb-inner .thumb-lg img     { width: 290px; height: 342px; }
+  .help .help__thumb-inner .thumb-bottom img { width: 145px; height: 138px; }
+}
