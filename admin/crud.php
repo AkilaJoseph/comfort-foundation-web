@@ -37,6 +37,51 @@ function admin_view(string $name, array $data = []): void
 function admin_entities(): array
 {
     return [
+        'home_slides' => [
+            'label'    => 'Home Banner Slides',
+            'singular' => 'Slide',
+            'icon'     => 'fa-panorama',
+            'table'    => 'home_slides',
+            'order'    => 'sort_order, id',
+            'columns'  => ['eyebrow' => 'Eyebrow', 'title' => 'Title', 'is_published' => 'Published', 'sort_order' => 'Order'],
+            'fields'   => [
+                'eyebrow'      => ['label' => 'Eyebrow', 'type' => 'text', 'hint' => 'Small label shown above the headline.'],
+                'title'        => ['label' => 'Headline', 'type' => 'richtext', 'required' => true, 'hint' => 'HTML is allowed — wrap the accent word in &lt;span class="bottom-line"&gt;word&lt;/span&gt; to underline it.'],
+                'image'        => ['label' => 'Background photo', 'type' => 'image', 'aspect' => '16/9'],
+                'sort_order'   => ['label' => 'Sort order', 'type' => 'number'],
+                'is_published' => ['label' => 'Published', 'type' => 'checkbox', 'default' => 1],
+            ],
+        ],
+
+        'core_values' => [
+            'label'    => 'Core Values',
+            'singular' => 'Value',
+            'icon'     => 'fa-heart-circle-check',
+            'table'    => 'core_values',
+            'order'    => 'sort_order, id',
+            'columns'  => ['title' => 'Title', 'icon' => 'Icon', 'sort_order' => 'Order'],
+            'fields'   => [
+                'title'      => ['label' => 'Title', 'type' => 'text', 'required' => true],
+                'icon'       => ['label' => 'Icon class', 'type' => 'text', 'default' => 'icon-donation', 'hint' => 'e.g. icon-spread-love, icon-support-heart, icon-fund, icon-health, icon-heart-hand'],
+                'text'       => ['label' => 'Description', 'type' => 'textarea'],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'approach_steps' => [
+            'label'    => 'Our Approach Steps',
+            'singular' => 'Step',
+            'icon'     => 'fa-route',
+            'table'    => 'approach_steps',
+            'order'    => 'sort_order, id',
+            'columns'  => ['title' => 'Title', 'sort_order' => 'Order'],
+            'fields'   => [
+                'title'      => ['label' => 'Title', 'type' => 'text', 'required' => true, 'hint' => 'The first three, in order, colour as Equip / Strengthen / Transform.'],
+                'text'       => ['label' => 'Description', 'type' => 'textarea'],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
         'programs' => [
             'label'    => 'Programmes',
             'singular' => 'Programme',
@@ -51,7 +96,7 @@ function admin_entities(): array
                 'icon'         => ['label' => 'Icon class', 'type' => 'text', 'hint' => 'e.g. icon-fund, icon-health, icon-spread-love'],
                 'summary'      => ['label' => 'Short summary', 'type' => 'textarea', 'hint' => 'Shown on cards and listings.'],
                 'body'         => ['label' => 'Full description', 'type' => 'richtext'],
-                'image'        => ['label' => 'Image', 'type' => 'image'],
+                'image'        => ['label' => 'Image', 'type' => 'image', 'aspect' => '4/3'],
                 'sort_order'   => ['label' => 'Sort order', 'type' => 'number'],
                 'is_published' => ['label' => 'Published', 'type' => 'checkbox', 'default' => 1],
             ],
@@ -71,7 +116,7 @@ function admin_entities(): array
                 'author'       => ['label' => 'Author', 'type' => 'text', 'default' => 'Comfort Foundation'],
                 'excerpt'      => ['label' => 'Summary', 'type' => 'textarea', 'hint' => 'One or two sentences, shown on listing cards.'],
                 'body'         => ['label' => 'Article', 'type' => 'richtext'],
-                'image'        => ['label' => 'Featured image', 'type' => 'image'],
+                'image'        => ['label' => 'Featured image', 'type' => 'image', 'aspect' => '16/9'],
                 'published_at' => ['label' => 'Publish date', 'type' => 'date'],
                 'is_published' => ['label' => 'Published', 'type' => 'checkbox', 'default' => 1],
             ],
@@ -92,7 +137,7 @@ function admin_entities(): array
                 'location'     => ['label' => 'Location', 'type' => 'text'],
                 'excerpt'      => ['label' => 'Summary', 'type' => 'textarea'],
                 'body'         => ['label' => 'Details', 'type' => 'richtext'],
-                'image'        => ['label' => 'Image', 'type' => 'image'],
+                'image'        => ['label' => 'Image', 'type' => 'image', 'aspect' => '16/9'],
                 'is_published' => ['label' => 'Published', 'type' => 'checkbox', 'default' => 1],
             ],
         ],
@@ -109,7 +154,7 @@ function admin_entities(): array
                 'name'         => ['label' => 'Full name', 'type' => 'text', 'required' => true],
                 'role_title'   => ['label' => 'Role / title', 'type' => 'text'],
                 'bio'          => ['label' => 'Biography', 'type' => 'richtext'],
-                'image'        => ['label' => 'Photo', 'type' => 'image'],
+                'image'        => ['label' => 'Photo', 'type' => 'image', 'aspect' => '3/4'],
                 'email'        => ['label' => 'Email', 'type' => 'text'],
                 'phone'        => ['label' => 'Phone', 'type' => 'text'],
                 'facebook'     => ['label' => 'Facebook URL', 'type' => 'text'],
@@ -191,7 +236,7 @@ function admin_entities(): array
                 'author'     => ['label' => 'Author', 'type' => 'text', 'required' => true],
                 'role_title' => ['label' => 'Role / context', 'type' => 'text'],
                 'quote'      => ['label' => 'Quote', 'type' => 'textarea', 'required' => true],
-                'image'      => ['label' => 'Photo', 'type' => 'image'],
+                'image'      => ['label' => 'Photo', 'type' => 'image', 'aspect' => '1/1'],
                 'rating'     => ['label' => 'Stars (1–5)', 'type' => 'number', 'default' => 5],
                 'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
             ],

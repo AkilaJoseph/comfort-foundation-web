@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `value`      TEXT         NULL,
   `group_name` VARCHAR(40)  NOT NULL DEFAULT 'general',
   `label`      VARCHAR(160) NOT NULL DEFAULT '',
-  `input_type` ENUM('text','textarea','url','email') NOT NULL DEFAULT 'text',
+  `input_type` ENUM('text','textarea','url','email','image') NOT NULL DEFAULT 'text',
   `sort_order` INT          NOT NULL DEFAULT 0,
   PRIMARY KEY (`key_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

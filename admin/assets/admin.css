@@ -122,3 +122,20 @@ textarea.rich{min-height:300px;font-family:ui-monospace,SFMono-Regular,Menlo,mon
   .content,.top{padding-left:18px;padding-right:18px}
   .kv{grid-template-columns:1fr}
 }
+
+/* ---------- crop-before-upload modal ---------- */
+.crop-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(35,31,32,.62);
+  align-items:center;justify-content:center;padding:24px}
+.crop-modal.is-open{display:flex}
+.crop-modal__panel{width:100%;max-width:720px;max-height:90vh;background:#fff;border-radius:16px;
+  box-shadow:0 30px 70px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}
+.crop-modal__head{padding:22px 26px 14px}
+.crop-modal__head h3{margin:0 0 4px;font-size:18px}
+.crop-modal__head p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+.crop-modal__stage{background:var(--ink);height:min(52vh,480px);position:relative}
+.crop-modal__stage img{display:block;max-width:100%}
+.crop-modal__foot{display:flex;gap:10px;justify-content:flex-end;padding:16px 26px;border-top:1px solid var(--line);flex-wrap:wrap}
+
+/* Cropper.js ships its own visuals; only the accent needs to match the brand. */
+.cropper-view-box{outline:1px solid var(--magenta)}
+.cropper-line,.cropper-point{background-color:var(--magenta)}

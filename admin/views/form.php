@@ -65,18 +65,16 @@ if ($isEdit && !empty($row['slug'])) {
 
                 case 'image':
                     $cur = (string) $val($name); ?>
-                    <?php if ($cur !== ''): ?>
-                    <div class="imgprev">
-                        <img src="<?= e(media($cur)) ?>" alt="">
+                    <div class="imgprev" id="f_<?= e($name) ?>_prev"<?= $cur === '' ? ' style="display:none"' : '' ?>>
+                        <img src="<?= $cur !== '' ? e(media($cur)) : '' ?>" alt="" id="f_<?= e($name) ?>_prev_img">
                         <div class="check" style="margin-top:10px">
                             <input type="checkbox" name="<?= e($name) ?>_remove" id="f_<?= e($name) ?>_rm" value="1">
                             <label for="f_<?= e($name) ?>_rm">Remove this image</label>
                         </div>
                     </div>
-                    <?php endif; ?>
                     <input type="hidden" name="<?= e($name) ?>_existing" value="<?= e($cur) ?>">
-                    <input type="file" name="<?= e($name) ?>" id="f_<?= e($name) ?>" accept="image/jpeg,image/png,image/gif,image/webp">
-                    <div class="hint">JPG, PNG, GIF or WebP, up to 8&nbsp;MB. Images are converted to WebP and resized automatically.</div>
+                    <input type="file" class="js-crop-input" data-aspect="<?= e((string) ($f['aspect'] ?? 'free')) ?>" data-target="f_<?= e($name) ?>_prev" name="<?= e($name) ?>" id="f_<?= e($name) ?>" accept="image/jpeg,image/png,image/gif,image/webp">
+                    <div class="hint">JPG, PNG, GIF or WebP, up to 8&nbsp;MB. Choosing a file opens the cropper so you can frame it before it uploads — images are then converted to WebP automatically.</div>
                 <?php break;
 
                 case 'number': ?>

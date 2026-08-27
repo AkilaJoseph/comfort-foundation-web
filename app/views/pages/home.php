@@ -6,34 +6,18 @@ $crew    = team_members(4);
 $quotes  = testimonials();
 $prts    = partners();
 $upcoming = events(3, 0, 'upcoming');
-
-$slides = [
-    [
-        'eyebrow' => 'Women-centered community development',
-        'title'   => 'Equipping women. Strengthening <span class="bottom-line">families</span>. Protecting children.',
-        'bg'      => 'uploads/media/cf-savings-group-meeting-wide.webp',
-    ],
-    [
-        'eyebrow' => 'Economic empowerment',
-        'title'   => 'When a woman <span class="bottom-line">earns</span>, a whole household rises with her.',
-        'bg'      => 'uploads/media/cf-market-vendor-wide.webp',
-    ],
-    [
-        'eyebrow' => 'Children\'s mental health',
-        'title'   => 'Every child deserves to grow up <span class="bottom-line">safe</span> and emotionally healthy.',
-        'bg'      => 'uploads/media/cf-children-learning-circle-wide.webp',
-    ],
-];
+$slides   = home_slides();
 ?>
 
 <!-- ==== hero ==== -->
+<?php if ($slides): ?>
 <section class="banner-two">
     <div class="banner-two__slider swiper">
         <div class="swiper-wrapper">
             <?php foreach ($slides as $idx => $s): ?>
             <div class="swiper-slide">
                 <div class="banner-two__slider-single">
-                    <div class="banner-two__slider-bg" data-background="<?= e(media($s['bg'], 'assets/images/banner/banner-one-bg.webp')) ?>"></div>
+                    <div class="banner-two__slider-bg" data-background="<?= e(media($s['image'] ?? '', 'assets/images/banner/banner-one-bg.webp')) ?>"></div>
                     <div class="container">
                         <div class="row">
                             <div class="col-12 col-md-9 col-lg-8 col-xxl-7">
@@ -61,6 +45,7 @@ $slides = [
     <div class="sprade-shape"><img src="<?= e(asset('assets/images/sprade-base.webp')) ?>" alt="" class="base-img" aria-hidden="true"></div>
     <div class="unity"><img src="<?= e(asset('assets/images/unity.webp')) ?>" alt="" loading="lazy" aria-hidden="true"></div>
 </section>
+<?php endif; ?>
 
 <!-- ==== flash messages ==== -->
 <?php $fl = render_flash(); if ($fl): ?>
@@ -74,11 +59,11 @@ $slides = [
             <div class="col-12 col-lg-5 col-xxl-6 d-none d-lg-block">
                 <div class="help__thumb">
                     <div class="help__thumb-inner">
-                        <div class="thumb-top thumb"><img src="<?= e(asset('uploads/media/help-thumb-top.webp')) ?>" alt="Women in a community training session" loading="lazy" decoding="async"></div>
+                        <div class="thumb-top thumb"><img src="<?= e(media(setting('home_who_photo_top'), 'uploads/media/help-thumb-top.webp')) ?>" alt="Women in a community training session" loading="lazy" decoding="async"></div>
                         <div class="thumb-lg thumb" data-aos="fade-left" data-aos-duration="1000">
-                            <img src="<?= e(asset('uploads/media/help-thumb-lg.webp')) ?>" alt="Comfort Foundation programme participants" loading="lazy" decoding="async">
+                            <img src="<?= e(media(setting('home_who_photo_lg'), 'uploads/media/help-thumb-lg.webp')) ?>" alt="Comfort Foundation programme participants" loading="lazy" decoding="async">
                         </div>
-                        <div class="thumb thumb-bottom"><img src="<?= e(asset('uploads/media/help-thumb-bottom.webp')) ?>" alt="Children in a safe space" loading="lazy" decoding="async"></div>
+                        <div class="thumb thumb-bottom"><img src="<?= e(media(setting('home_who_photo_bottom'), 'uploads/media/help-thumb-bottom.webp')) ?>" alt="Children in a safe space" loading="lazy" decoding="async"></div>
                         <div class="line"><img src="<?= e(asset('assets/images/help/line.webp')) ?>" alt="" loading="lazy" aria-hidden="true"></div>
                         <div class="grid-line"><img src="<?= e(asset('assets/images/help/grid.webp')) ?>" alt="" class="base-img" loading="lazy" aria-hidden="true"></div>
                         <div class="vertical-text"><h5>Equip &middot; <span>Strengthen</span> &middot; Transform</h5></div>
@@ -88,7 +73,7 @@ $slides = [
             <div class="col-12 col-lg-7 col-xxl-6">
                 <div class="help__content">
                     <span class="sub-title"><i class="icon-donation"></i>Who we are</span>
-                    <h2 class="title-animation">A women-centered NGO rooted in <span>Mwanza</span></h2>
+                    <h2 class="title-animation"><?= e(setting('home_who_heading', 'A women-centered NGO rooted in Mwanza')) ?></h2>
                     <p><?= e(setting('site_short_intro')) ?></p>
                     <div class="help__content-icon-group">
                         <div class="help__content-icon">

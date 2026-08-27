@@ -6,4 +6,12 @@ $file = __DIR__ . $path;
 if ($path !== '/' && is_file($file)) {
     return false;
 }
+if (is_dir($file) && is_file(rtrim($file, '/') . '/index.php')) {
+    require rtrim($file, '/') . '/index.php';
+    return true;
+}
+if (preg_match('~^/admin(/|$)~', $path)) {
+    require __DIR__ . '/admin/index.php';
+    return true;
+}
 require __DIR__ . '/index.php';

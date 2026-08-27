@@ -8,6 +8,7 @@
 <title><?= e($title ?? 'Admin') ?> — <?= e(setting('site_name', 'Comfort Foundation')) ?></title>
 <link rel="icon" href="<?= e(asset('assets/images/logo/favicon.ico')) ?>">
 <link rel="stylesheet" href="<?= e(asset('assets/fonts/css/all.min.css')) ?>">
+<link rel="stylesheet" href="<?= e(asset('admin/assets/vendor/cropper.min.css')) ?>">
 <link rel="stylesheet" href="<?= e(asset('admin/assets/admin.css')) ?>">
 </head>
 <body>
@@ -71,5 +72,7 @@ document.addEventListener('click', function (ev) {
   if (btn && !confirm(btn.getAttribute('data-confirm'))) { ev.preventDefault(); }
 });
 </script>
+<script src="<?= e(asset('admin/assets/vendor/cropper.min.js')) ?>"></script>
+<script src="<?= e(asset('admin/assets/admin-cropper.js')) ?>"></script>
 </body>
 </html>

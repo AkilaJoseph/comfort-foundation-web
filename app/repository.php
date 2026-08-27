@@ -249,42 +249,28 @@ function faqs(): array
     return all('SELECT * FROM faqs ORDER BY sort_order, id');
 }
 
-/**
- * The three-step approach model (EQUIP / STRENGTHEN / TRANSFORM).
- * Fixed strategic content — lives in code rather than the database.
- */
+/** The three-step approach model (EQUIP / STRENGTHEN / TRANSFORM), admin-managed. */
 function approach_steps(): array
 {
-    return [
-        [
-            'key'   => 'equip',
-            'title' => 'Equip',
-            'text'  => 'We build practical economic and life skills by giving women the tools they need for financial independence. Through hands-on training, savings groups, and enterprise support, we equip women to earn, save, and grow.',
-        ],
-        [
-            'key'   => 'strengthen',
-            'title' => 'Strengthen',
-            'text'  => 'We strengthen families from within. Through parenting education, caregiver support, and father engagement, we build the knowledge and bonds that make families safe, stable, and resilient.',
-        ],
-        [
-            'key'   => 'transform',
-            'title' => 'Transform',
-            'text'  => 'We invest in children\'s emotional futures. Through safe spaces, psychosocial support, and community mental health awareness, we help children grow up emotionally healthy, protected, and ready to lead.',
-        ],
-    ];
+    $keys = ['equip', 'strengthen', 'transform'];
+    $rows = all('SELECT * FROM approach_steps ORDER BY sort_order, id');
+    foreach ($rows as $i => &$r) {
+        $r['key'] = $keys[$i % 3];
+    }
+    unset($r);
+    return $rows;
 }
 
-/** Core values, straight from the organisational profile. */
+/** Core values, admin-managed. */
 function core_values(): array
 {
-    return [
-        ['icon' => 'icon-spread-love',   'title' => 'Dignity',        'text' => 'We uphold the worth and rights of every woman, girl, and child we serve.'],
-        ['icon' => 'icon-support-heart', 'title' => 'Resilience',     'text' => 'We build lasting strength in individuals and communities.'],
-        ['icon' => 'icon-fund',          'title' => 'Integrity',      'text' => 'We act with transparency and accountability in all we do.'],
-        ['icon' => 'icon-donation',      'title' => 'Women-Centered', 'text' => 'Women\'s voices, needs, and leadership are at the heart of everything.'],
-        ['icon' => 'icon-health',        'title' => 'Protection',     'text' => 'We create safe, trusted environments for children and families.'],
-        ['icon' => 'icon-heart-hand',    'title' => 'Partnership',    'text' => 'We grow through honest, trust-based collaboration at every level.'],
-    ];
+    return all('SELECT * FROM core_values ORDER BY sort_order, id');
+}
+
+/** Hero banner slides shown on the home page. */
+function home_slides(): array
+{
+    return all('SELECT * FROM home_slides WHERE is_published = 1 ORDER BY sort_order, id');
 }
 
 /** Who our programmes are designed for and with. */

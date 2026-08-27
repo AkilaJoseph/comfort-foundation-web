@@ -118,6 +118,40 @@ switch ($section) {
                     q('UPDATE settings SET value = ? WHERE key_name = ?', [is_string($val) ? trim($val) : '', (string) $key]);
                 }
             }
+
+            // Image-type settings: same upload/replace/remove flow as the
+            // entity image fields, just keyed by settings.key_name instead
+            // of a table column.
+            $existing = $_POST['settings_image_existing'] ?? [];
+            $removes  = $_POST['settings_image_remove'] ?? [];
+            $files    = $_FILES['settings_image'] ?? [];
+            if (is_array($existing)) {
+                foreach ($existing as $key => $keep) {
+                    $path = (string) $keep;
+                    $hasFile = !empty($files['name'][$key] ?? '');
+                    if ($hasFile) {
+                        $file = [
+                            'name'     => $files['name'][$key],
+                            'type'     => $files['type'][$key],
+                            'tmp_name' => $files['tmp_name'][$key],
+                            'error'    => $files['error'][$key],
+                            'size'     => $files['size'][$key],
+                        ];
+                        $res = handle_upload($file);
+                        if ($res['ok']) {
+                            if ($path !== '' && $path !== $res['path']) {
+                                delete_upload($path);
+                            }
+                            $path = $res['path'];
+                        }
+                    } elseif (!empty($removes[$key])) {
+                        delete_upload($path);
+                        $path = '';
+                    }
+                    q('UPDATE settings SET value = ? WHERE key_name = ?', [$path, (string) $key]);
+                }
+            }
+
             cache_clear();
             flash('success', 'Settings saved.');
             redirect('admin/settings');
