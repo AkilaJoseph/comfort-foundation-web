@@ -7,8 +7,8 @@
                     <nav class="navbar p-0">
                         <div class="navbar-logo">
                             <a href="<?= e(url()) ?>" aria-label="<?= e(setting('site_name')) ?> home">
-                                <img src="<?= e(asset('assets/images/logo/logo.webp')) ?>"
-                                     alt="<?= e(setting('site_name')) ?>" width="200" height="160" fetchpriority="high" decoding="async">
+                                <img src="<?= e(media(setting('site_logo'), 'assets/images/logo/logo.webp')) ?>"
+                                     alt="<?= e(setting('site_name')) ?>" fetchpriority="high" decoding="async">
                             </a>
                         </div>
                         <div class="navbar__menu-wrapper">

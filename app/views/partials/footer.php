@@ -30,7 +30,7 @@
                 <div class="footer-two__widget">
                     <div class="footer-two__widget-logo">
                         <a href="<?= e(url()) ?>">
-                            <img src="<?= e(asset('assets/images/logo/logo-light.webp')) ?>" alt="<?= e(setting('site_name')) ?>" width="220" height="176" loading="lazy" decoding="async">
+                            <img src="<?= e(media(setting('site_logo_footer'), 'assets/images/logo/logo-light.webp')) ?>" alt="<?= e(setting('site_name')) ?>" loading="lazy" decoding="async">
                         </a>
                     </div>
                     <div class="footer-two__widget-content">

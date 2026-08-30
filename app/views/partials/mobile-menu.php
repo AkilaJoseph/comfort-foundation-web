@@ -3,7 +3,7 @@
         <div class="mobile-menu__header nav-fade">
             <div class="logo">
                 <a href="<?= e(url()) ?>" aria-label="home" title="<?= e(setting('site_name')) ?>">
-                    <img src="<?= e(asset('assets/images/logo/logo.webp')) ?>" alt="<?= e(setting('site_name')) ?>" width="180" height="144" decoding="async">
+                    <img src="<?= e(media(setting('site_logo'), 'assets/images/logo/logo.webp')) ?>" alt="<?= e(setting('site_name')) ?>" decoding="async">
                 </a>
             </div>
             <button aria-label="close menu" class="close-mobile-menu"><i class="fa-solid fa-xmark"></i></button>

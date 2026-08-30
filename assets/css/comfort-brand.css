@@ -64,12 +64,6 @@
   .navbar-logo img { max-height: 52px; }
 }
 
-/* The img[loading="lazy"] placeholder tint at the bottom of this file paints
-   a light grey behind every lazy image. The logos are transparent PNG/WebP,
-   so on the dark footer that tint showed up as a grey box around the mark. */
-.navbar-logo img,
-.mobile-menu__header .logo img,
-.footer-two__widget-logo img { background: none; }
 
 /* The header container runs to 1800px with only the 12px Bootstrap gutter,
    which left the logo almost touching the viewport edge while the nav pill
@@ -193,6 +187,15 @@ img { max-width: 100%; }
    painted a solid grey rectangle across the address. Every such image is
    marked aria-hidden, which makes a reliable opt-out. */
 img[loading="lazy"]:not([aria-hidden="true"]) { background: #f3f1f2; }
+
+/* The logos are transparent PNG/WebP — the placeholder tint just above
+   showed up as a solid grey/white card behind the mark, worst on the dark
+   footer. `.footer-two__widget-logo img { background: none }` alone loses
+   to the rule above: two attribute selectors there outweigh one class
+   selector here. Match its specificity (and come after it) to actually win. */
+.navbar-logo img[loading="lazy"],
+.mobile-menu__header .logo img[loading="lazy"],
+.footer-two__widget-logo img[loading="lazy"] { background: none; }
 
 /* --- footer contact widget ---------------------------------------------
    main.css styles this list only via `--contact a`, and sets `gap` and

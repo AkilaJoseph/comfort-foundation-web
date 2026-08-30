@@ -1,6 +1,7 @@
 <?php
 $groups = settings_grouped();
 $titles = [
+    'branding' => 'Logo',
     'home'    => 'Home page',
     'general' => 'Organisation',
     'contact' => 'Contact details',
@@ -46,6 +47,8 @@ $aspects = [
                    name="settings[<?= e($s['key_name']) ?>]" id="s_<?= e($s['key_name']) ?>" value="<?= e((string) $s['value']) ?>">
             <?php endif; ?>
             <?php if ($group === 'social'): ?><div class="hint">Leave blank to hide this icon from the site.</div><?php endif; ?>
+            <?php if ($s['key_name'] === 'site_logo'): ?><div class="hint">Shown in the header and mobile menu, on a white background. A transparent PNG or WebP looks best.</div><?php endif; ?>
+            <?php if ($s['key_name'] === 'site_logo_footer'): ?><div class="hint">Shown in the footer, on a dark background — use a version with light/white text, or your mark on a transparent background.</div><?php endif; ?>
         </div>
         <?php endforeach; ?>
     </div>
