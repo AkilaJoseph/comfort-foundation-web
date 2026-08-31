@@ -94,7 +94,7 @@ $slides   = home_slides();
                     <div class="help__content-list">
                         <ul>
                             <li><i class="fa-solid fa-circle-check"></i> Registered Tanzanian NGO — Reg. No. <?= e(setting('reg_number')) ?></li>
-                            <li><i class="fa-solid fa-circle-check"></i> Established <?= e(setting('established_year')) ?> in Nyamagana District, Mwanza</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Established <?= e(setting('established_year')) ?></li>
                             <li><i class="fa-solid fa-circle-check"></i> Coverage across <?= e(setting('coverage')) ?></li>
                         </ul>
                     </div>

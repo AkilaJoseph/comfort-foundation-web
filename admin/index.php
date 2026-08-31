@@ -218,6 +218,24 @@ switch ($section) {
         redirect('admin');
         break;
 
+    // Image uploads made from inside the CKEditor toolbar (drag-drop or the
+    // image button), not tied to any single entity's form submission.
+    case 'editor-upload':
+        header('Content-Type: application/json');
+        if ($method !== 'POST' || !csrf_ok()) {
+            http_response_code(419);
+            echo json_encode(['error' => ['message' => 'Your session expired. Please reload the page and try again.']]);
+            exit;
+        }
+        $res = handle_upload($_FILES['upload'] ?? []);
+        if (!$res['ok']) {
+            http_response_code(422);
+            echo json_encode(['error' => ['message' => $res['error']]]);
+            exit;
+        }
+        echo json_encode(['url' => media($res['path'])]);
+        exit;
+
     default:
         http_response_code(404);
         admin_view('404', ['title' => 'Not found']);

@@ -41,8 +41,8 @@ if ($isEdit && !empty($row['slug'])) {
                 <?php break;
 
                 case 'richtext': ?>
-                    <textarea class="rich" name="<?= e($name) ?>" id="f_<?= e($name) ?>"><?= e($val($name)) ?></textarea>
-                    <div class="hint">HTML is allowed: &lt;p&gt; &lt;h3&gt; &lt;ul&gt; &lt;li&gt; &lt;strong&gt; &lt;em&gt; &lt;a&gt; &lt;img&gt; &lt;blockquote&gt;. Anything unsafe is stripped when you save.</div>
+                    <textarea class="rich js-ckeditor" name="<?= e($name) ?>" id="f_<?= e($name) ?>"><?= e($val($name)) ?></textarea>
+                    <div class="hint">Anything unsafe (scripts, embeds) is stripped when you save. You can drag an image straight into the editor to upload it.</div>
                 <?php break;
 
                 case 'checkbox': ?>

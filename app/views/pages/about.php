@@ -23,7 +23,7 @@
                     </div>
                     <div class="help__content-list">
                         <ul>
-                            <li><i class="fa-solid fa-circle-check"></i> Established <?= e(setting('established_year')) ?> &middot; Mwanza, Tanzania</li>
+                            <li><i class="fa-solid fa-circle-check"></i> Established <?= e(setting('established_year')) ?></li>
                             <li><i class="fa-solid fa-circle-check"></i> Reg. No. <?= e(setting('reg_number')) ?></li>
                             <li><i class="fa-solid fa-circle-check"></i> <?= e(setting('contact_address')) ?></li>
                             <li><i class="fa-solid fa-circle-check"></i> Coverage: <?= e(setting('coverage')) ?></li>

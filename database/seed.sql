@@ -26,8 +26,8 @@ INSERT INTO `settings` (`key_name`,`value`,`group_name`,`label`,`input_type`,`so
 ('mission','Creating resilient families where girls, women, and children thrive.','general','Mission statement','textarea',5),
 
 ('contact_email','infocomfort2024@gmail.com','contact','Primary email','email',10),
-('contact_phone','+255 759 085 931','contact','Primary phone','text',11),
-('contact_phone_raw','+255759085931','contact','Phone (dial format)','text',12),
+('contact_phone','+255 768 011 343','contact','Primary phone','text',11),
+('contact_phone_raw','+255768011343','contact','Phone (dial format)','text',12),
 ('contact_address','Nyamagana District, P.O. Box 504, Mwanza, Tanzania','contact','Postal address','textarea',13),
 ('contact_map_url','https://www.google.com/maps/search/?api=1&query=Nyamagana+District+Mwanza+Tanzania','contact','Google Maps link','url',14),
 ('contact_map_embed','https://www.google.com/maps?q=Nyamagana%20District%20Mwanza%20Tanzania&output=embed','contact','Google Maps embed URL','url',15),
@@ -41,7 +41,7 @@ INSERT INTO `settings` (`key_name`,`value`,`group_name`,`label`,`input_type`,`so
 ('bank_account_name','Comfort Foundation','giving','Account name','text',31),
 ('bank_account_number','0133970009200','giving','Account number','text',32),
 ('bank_branch','Mwanza, Tanzania','giving','Branch','text',33),
-('mobile_money_number','0133970009200','giving','Mobile money number','text',34),
+('mobile_money_number','0656011343','giving','Mobile money number','text',34),
 ('mobile_money_name','Comfort Foundation','giving','Mobile money account name','text',35),
 
 ('social_facebook','','social','Facebook URL','url',40),

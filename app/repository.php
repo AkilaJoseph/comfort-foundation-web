@@ -276,37 +276,19 @@ function home_slides(): array
 /** Who our programmes are designed for and with. */
 function beneficiaries(): array
 {
-    return [
-        'Women and girls (primary focus), particularly those facing economic vulnerability and limited access to opportunities',
-        'Adolescent girls and young women aged 14–35 in vocational and leadership programmes',
-        'Mothers and caregivers seeking parenting skills and family resilience support',
-        'Children aged 0–18 receiving psychosocial and mental health support',
-        'Community leaders, teachers, and local health workers as key programme partners',
-    ];
+    return array_column(all('SELECT text FROM beneficiaries ORDER BY sort_order, id'), 'text');
 }
 
 /** Partnership strategy, from the organisational profile. */
 function partnership_types(): array
 {
-    return [
-        ['title' => 'Government Agencies',            'text' => 'Ministry of Health, Ministry of Community Development, Gender and Social Welfare, and local government authorities — aligning our programmes with national priorities.'],
-        ['title' => 'Schools & Health Facilities',    'text' => 'Delivering programmes where communities already gather and already trust.'],
-        ['title' => 'NGOs & Civil Society',           'text' => 'Collaborating to reduce duplication and amplify collective impact.'],
-        ['title' => 'International Development Partners', 'text' => 'Seeking grants and technical support from aligned foundations and bilateral agencies.'],
-        ['title' => 'Private Sector',                 'text' => 'Engaging businesses in livelihood training, market linkages, and co-funding.'],
-    ];
+    return all('SELECT * FROM partnership_types ORDER BY sort_order, id');
 }
 
 /** Expected five-year impact, from the organisational profile. */
 function long_term_impact(): array
 {
-    return [
-        'Thousands of women and girls with sustainable livelihoods, income, and financial independence.',
-        'Families equipped with parenting knowledge and support systems that reduce stress and strengthen bonds.',
-        'Children growing up with access to emotional support, safe spaces, and positive mental health.',
-        'Communities where women are recognised as economic leaders and agents of family and social change.',
-        'A replicable, women-centered model for integrated community development across Tanzania.',
-    ];
+    return array_column(all('SELECT text FROM long_term_impact ORDER BY sort_order, id'), 'text');
 }
 
 // ---------------------------------------------------------------------

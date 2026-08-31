@@ -46,7 +46,7 @@ function admin_entities(): array
             'columns'  => ['eyebrow' => 'Eyebrow', 'title' => 'Title', 'is_published' => 'Published', 'sort_order' => 'Order'],
             'fields'   => [
                 'eyebrow'      => ['label' => 'Eyebrow', 'type' => 'text', 'hint' => 'Small label shown above the headline.'],
-                'title'        => ['label' => 'Headline', 'type' => 'richtext', 'required' => true, 'hint' => 'HTML is allowed — wrap the accent word in &lt;span class="bottom-line"&gt;word&lt;/span&gt; to underline it.'],
+                'title'        => ['label' => 'Headline', 'type' => 'textarea', 'required' => true, 'hint' => 'Plain text, or wrap one word in &lt;span class="bottom-line"&gt;word&lt;/span&gt; to underline it like the others (this field is deliberately a plain box, not the rich editor, so that HTML still works).'],
                 'image'        => ['label' => 'Background photo', 'type' => 'image', 'aspect' => '16/9'],
                 'sort_order'   => ['label' => 'Sort order', 'type' => 'number'],
                 'is_published' => ['label' => 'Published', 'type' => 'checkbox', 'default' => 1],
@@ -252,6 +252,46 @@ function admin_entities(): array
             'fields'   => [
                 'question'   => ['label' => 'Question', 'type' => 'text', 'required' => true],
                 'answer'     => ['label' => 'Answer', 'type' => 'textarea', 'required' => true],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'beneficiaries' => [
+            'label'    => 'Who We Serve',
+            'singular' => 'Beneficiary group',
+            'icon'     => 'fa-people-group',
+            'table'    => 'beneficiaries',
+            'order'    => 'sort_order, id',
+            'columns'  => ['text' => 'Description', 'sort_order' => 'Order'],
+            'fields'   => [
+                'text'       => ['label' => 'Description', 'type' => 'text', 'required' => true, 'hint' => 'Shown as one line on the About page — e.g. "Women and girls facing economic vulnerability".'],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'partnership_types' => [
+            'label'    => 'Partnership Types',
+            'singular' => 'Partnership type',
+            'icon'     => 'fa-handshake-angle',
+            'table'    => 'partnership_types',
+            'order'    => 'sort_order, id',
+            'columns'  => ['title' => 'Title', 'sort_order' => 'Order'],
+            'fields'   => [
+                'title'      => ['label' => 'Title', 'type' => 'text', 'required' => true],
+                'text'       => ['label' => 'Description', 'type' => 'textarea', 'required' => true],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'long_term_impact' => [
+            'label'    => 'Long-Term Impact',
+            'singular' => 'Impact statement',
+            'icon'     => 'fa-seedling',
+            'table'    => 'long_term_impact',
+            'order'    => 'sort_order, id',
+            'columns'  => ['text' => 'Statement', 'sort_order' => 'Order'],
+            'fields'   => [
+                'text'       => ['label' => 'Statement', 'type' => 'text', 'required' => true, 'hint' => 'Shown on the Impact page as one expected five-year outcome.'],
                 'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
             ],
         ],
