@@ -1,5 +1,5 @@
 <?php $items = faqs(); ?>
-<?php partial('page-banner', ['heading' => 'Frequently Asked Questions', 'eyebrow' => 'Good to know', 'crumbs' => ['FAQ' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('faq', 'heading', 'Frequently Asked Questions'), 'eyebrow' => page_banner('faq', 'eyebrow', 'Good to know'), 'crumbs' => ['FAQ' => null]]); ?>
 
 <section class="faq" style="padding:100px 0;">
     <div class="container">

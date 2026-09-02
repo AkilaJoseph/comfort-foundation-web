@@ -29,6 +29,9 @@ $aspects = [
             <label for="s_<?= e($s['key_name']) ?>"><?= e($s['label'] ?: $s['key_name']) ?></label>
             <?php if ($s['input_type'] === 'textarea'): ?>
             <textarea name="settings[<?= e($s['key_name']) ?>]" id="s_<?= e($s['key_name']) ?>" style="min-height:90px"><?= e((string) $s['value']) ?></textarea>
+            <?php elseif ($s['input_type'] === 'richtext'): ?>
+            <textarea class="rich js-ckeditor" name="settings[<?= e($s['key_name']) ?>]" id="s_<?= e($s['key_name']) ?>"><?= e((string) $s['value']) ?></textarea>
+            <div class="hint">Anything unsafe (scripts, embeds) is stripped when you save.</div>
             <?php elseif ($s['input_type'] === 'image'):
                 $cur = (string) $s['value']; ?>
             <div class="imgprev" id="s_<?= e($s['key_name']) ?>_prev"<?= $cur === '' ? ' style="display:none"' : '' ?>>

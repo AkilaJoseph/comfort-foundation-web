@@ -1,5 +1,5 @@
 <?php $progs = programs(); ?>
-<?php partial('page-banner', ['heading' => 'Our Programmes', 'eyebrow' => 'Core business areas', 'crumbs' => ['Programmes' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('programs', 'heading', 'Our Programmes'), 'eyebrow' => page_banner('programs', 'eyebrow', 'Core business areas'), 'crumbs' => ['Programmes' => null]]); ?>
 
 <section style="padding:100px 0;">
     <div class="container">

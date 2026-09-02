@@ -6,7 +6,7 @@ $total    = events_count($when);
 $pg       = paginate($total, $perPage, $page, 'events');
 $items    = events($perPage, $pg['offset'], $when);
 ?>
-<?php partial('page-banner', ['heading' => 'Events', 'eyebrow' => 'Trainings, sessions & gatherings', 'crumbs' => ['Events' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('events', 'heading', 'Events'), 'eyebrow' => page_banner('events', 'eyebrow', 'Trainings, sessions & gatherings'), 'crumbs' => ['Events' => null]]); ?>
 
 <section class="event event-alt" style="padding:100px 0;">
     <div class="container">

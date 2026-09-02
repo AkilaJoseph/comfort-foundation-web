@@ -295,6 +295,107 @@ function admin_entities(): array
                 'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
             ],
         ],
+
+        'donate_uses' => [
+            'label'    => 'Donate — Where It Goes',
+            'singular' => 'Card',
+            'icon'     => 'fa-hand-holding-dollar',
+            'table'    => 'donate_uses',
+            'order'    => 'sort_order, id',
+            'columns'  => ['title' => 'Title', 'icon' => 'Icon', 'sort_order' => 'Order'],
+            'fields'   => [
+                'title'      => ['label' => 'Title', 'type' => 'text', 'required' => true],
+                'icon'       => ['label' => 'Icon class', 'type' => 'text', 'default' => 'icon-fund', 'hint' => 'e.g. icon-fund, icon-spread-love, icon-health'],
+                'text'       => ['label' => 'Description', 'type' => 'textarea', 'required' => true],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'impact_measures' => [
+            'label'    => 'Impact — How We Measure',
+            'singular' => 'Card',
+            'icon'     => 'fa-ruler',
+            'table'    => 'impact_measures',
+            'order'    => 'sort_order, id',
+            'columns'  => ['title' => 'Title', 'sort_order' => 'Order'],
+            'fields'   => [
+                'title'      => ['label' => 'Title', 'type' => 'text', 'required' => true],
+                'text'       => ['label' => 'Description', 'type' => 'textarea', 'required' => true],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'volunteer_areas' => [
+            'label'    => 'Volunteer — Interest Areas',
+            'singular' => 'Area',
+            'icon'     => 'fa-list-check',
+            'table'    => 'volunteer_areas',
+            'order'    => 'sort_order, id',
+            'columns'  => ['title' => 'Area', 'sort_order' => 'Order'],
+            'fields'   => [
+                'title'      => ['label' => 'Area', 'type' => 'text', 'required' => true, 'hint' => 'One checkbox option on the volunteer application form.'],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'volunteer_highlights' => [
+            'label'    => 'Volunteer — What You\'ll Do',
+            'singular' => 'Highlight',
+            'icon'     => 'fa-circle-check',
+            'table'    => 'volunteer_highlights',
+            'order'    => 'sort_order, id',
+            'columns'  => ['text' => 'Highlight', 'sort_order' => 'Order'],
+            'fields'   => [
+                'text'       => ['label' => 'Highlight', 'type' => 'text', 'required' => true, 'hint' => 'One bullet point shown on the Volunteer page.'],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'page_banners' => [
+            'label'    => 'Page Banners',
+            'singular' => 'Banner',
+            'icon'     => 'fa-flag',
+            'table'    => 'page_banners',
+            'order'    => 'sort_order, id',
+            'columns'  => ['page_key' => 'Page', 'heading' => 'Heading', 'eyebrow' => 'Eyebrow'],
+            'fields'   => [
+                'page_key'   => ['label' => 'Page key', 'type' => 'text', 'required' => true, 'hint' => 'Must match the page it belongs to — e.g. about, donate, volunteer. Do not rename an existing one.'],
+                'eyebrow'    => ['label' => 'Small label above the heading', 'type' => 'text'],
+                'heading'    => ['label' => 'Heading', 'type' => 'text', 'required' => true],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'nav_items' => [
+            'label'    => 'Main Menu',
+            'singular' => 'Menu item',
+            'icon'     => 'fa-bars',
+            'table'    => 'nav_items',
+            'order'    => 'parent_id, sort_order, id',
+            'columns'  => ['label' => 'Label', 'href' => 'Links to'],
+            'fields'   => [
+                'label'         => ['label' => 'Label', 'type' => 'text', 'required' => true],
+                'href'          => ['label' => 'Links to', 'type' => 'text', 'hint' => 'A relative site path with no leading slash, e.g. about or programs — never a full URL. Leave blank only if this item exists just to hold a submenu.'],
+                'parent_id'     => ['label' => 'Nest under', 'type' => 'select', 'options' => 'nav_top_items', 'hint' => 'Leave as "— none —" for a top-level menu item; otherwise choose the top-level item this should appear under.'],
+                'auto_programs' => ['label' => 'Automatically list every published programme under this item', 'type' => 'checkbox'],
+                'sort_order'    => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
+
+        'footer_links' => [
+            'label'    => 'Footer Links',
+            'singular' => 'Link',
+            'icon'     => 'fa-link',
+            'table'    => 'footer_links',
+            'order'    => 'col, sort_order, id',
+            'columns'  => ['label' => 'Label', 'href' => 'Links to'],
+            'fields'   => [
+                'label'      => ['label' => 'Label', 'type' => 'text', 'required' => true],
+                'href'       => ['label' => 'Links to', 'type' => 'text', 'required' => true, 'hint' => 'A relative site path with no leading slash, e.g. about or contact.'],
+                'col'        => ['label' => 'Column', 'type' => 'select', 'options' => 'footer_columns', 'default' => 0],
+                'sort_order' => ['label' => 'Sort order', 'type' => 'number'],
+            ],
+        ],
     ];
 }
 
@@ -302,8 +403,10 @@ function admin_entities(): array
 function admin_options(string $source): array
 {
     return match ($source) {
-        'categories' => array_column(all('SELECT id, name FROM categories ORDER BY name'), 'name', 'id'),
-        default      => [],
+        'categories'     => array_column(all('SELECT id, name FROM categories ORDER BY name'), 'name', 'id'),
+        'nav_top_items'  => array_column(all('SELECT id, label FROM nav_items WHERE parent_id IS NULL ORDER BY sort_order, id'), 'label', 'id'),
+        'footer_columns' => [0 => 'Explore column', 1 => 'Get Involved column'],
+        default          => [],
     };
 }
 

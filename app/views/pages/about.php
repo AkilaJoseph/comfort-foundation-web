@@ -1,4 +1,4 @@
-<?php partial('page-banner', ['heading' => 'About Comfort Foundation', 'eyebrow' => 'Who we are', 'crumbs' => ['About' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('about', 'heading', 'About Comfort Foundation'), 'eyebrow' => page_banner('about', 'eyebrow', 'Who we are'), 'crumbs' => ['About' => null]]); ?>
 
 <section class="help" style="padding:100px 0;">
     <div class="container">
@@ -15,11 +15,10 @@
             </div>
             <div class="col-12 col-lg-6">
                 <div class="help__content">
-                    <span class="sub-title"><i class="icon-donation"></i>Organisational background</span>
-                    <h2 class="title-animation">A partner to communities, not a conventional <span>service provider</span></h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('about_background_eyebrow', 'Organisational background')) ?></span>
+                    <h2 class="title-animation"><?= setting('about_background_title', 'A partner to communities, not a conventional <span>service provider</span>') ?></h2>
                     <div class="cf-prose">
-                        <p>Comfort Foundation (CF) is a legally registered Tanzanian NGO headquartered in Nyamagana District, Mwanza. The Foundation was established in response to a clear and urgent reality: women and girls in Tanzania's communities carry enormous potential, yet structural barriers, economic exclusion and inadequate family support systems prevent them from realising it.</p>
-                        <p>CF was founded in response to the challenges faced by women, families and children in underserved communities. The organisation recognised that many women were working hard in agriculture and entrepreneurship but lacked the skills, savings and networks needed to achieve lasting economic security. Many mothers were parenting under stress without access to guidance or community support, while children — particularly girls — lacked the emotional support, protection and safe spaces needed to thrive.</p>
+                        <?= setting('about_intro') ?>
                     </div>
                     <div class="help__content-list">
                         <ul>
@@ -61,8 +60,8 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-7">
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>What guides us</span>
-                    <h2 class="title-animation">Our core <span>values</span></h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('about_values_eyebrow', 'What guides us')) ?></span>
+                    <h2 class="title-animation"><?= setting('about_values_title', 'Our core <span>values</span>') ?></h2>
                 </div>
             </div>
         </div>
@@ -86,8 +85,8 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-8">
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>Our approach</span>
-                    <h2>Equip &middot; Strengthen &middot; Transform</h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('about_approach_eyebrow', 'Our approach')) ?></span>
+                    <h2><?= setting('about_approach_title', 'Equip &middot; Strengthen &middot; Transform') ?></h2>
                 </div>
             </div>
         </div>
@@ -110,8 +109,8 @@
         <div class="row gutter-40 align-items-center">
             <div class="col-12 col-lg-6">
                 <div class="section__header" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>Who we serve</span>
-                    <h2 class="title-animation">Designed <span>for</span> and <span>with</span> our communities</h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('about_serve_eyebrow', 'Who we serve')) ?></span>
+                    <h2 class="title-animation"><?= setting('about_serve_title', 'Designed <span>for</span> and <span>with</span> our communities') ?></h2>
                 </div>
                 <div class="help__content-list">
                     <ul>
@@ -123,10 +122,10 @@
             </div>
             <div class="col-12 col-lg-6">
                 <div class="section__header" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                    <span class="sub-title"><i class="icon-donation"></i>Partnership strategy</span>
-                    <h2 class="title-animation">Transformation takes <span>coordination</span></h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('about_partnership_eyebrow', 'Partnership strategy')) ?></span>
+                    <h2 class="title-animation"><?= setting('about_partnership_title', 'Transformation takes <span>coordination</span>') ?></h2>
                 </div>
-                <p style="margin-bottom:24px;">CF believes that sustainable community transformation requires coordinated effort across systems. We actively build partnerships with:</p>
+                <p style="margin-bottom:24px;"><?= e(setting('about_partnership_intro', 'CF believes that sustainable community transformation requires coordinated effort across systems. We actively build partnerships with:')) ?></p>
                 <?php foreach (partnership_types() as $i => $pt): ?>
                 <div class="contact-main__single" style="margin-bottom:18px;">
                     <div class="thumb"><i class="fa-solid fa-handshake-angle"></i></div>
@@ -148,9 +147,8 @@
         <div class="row justify-content-center">
             <div class="col-12 col-xl-10">
                 <div class="cf-give-card cf-prose" data-aos="fade-up" data-aos-duration="1000" style="text-align:center;padding:52px 40px;">
-                    <h3 style="margin-bottom:20px;">An invitation</h3>
-                    <p>We are not a conventional service provider. We are a partner to communities, walking alongside women, families and children with practical tools, genuine solidarity, and a long-term commitment to transformation.</p>
-                    <p>We invite government institutions, development partners, donors and communities to join us in building a Tanzania where every woman has economic power, every family has the support it needs, and every child grows up safe, emotionally healthy and ready to thrive.</p>
+                    <h3 style="margin-bottom:20px;"><?= e(setting('about_invitation_heading', 'An invitation')) ?></h3>
+                    <?= setting('about_invitation_body') ?>
                     <div class="cta" style="margin-top:28px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
                         <a href="<?= e(url('donate')) ?>" class="btn--primary">Donate Now <i class="fa-solid fa-arrow-right"></i></a>
                         <a href="<?= e(url('contact')) ?>" class="btn--tertiary">Talk To Us <i class="fa-solid fa-arrow-right"></i></a>

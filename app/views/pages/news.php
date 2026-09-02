@@ -5,11 +5,11 @@ $categoryId = isset($category) ? (int) $category['id'] : null;
 $total      = posts_count($categoryId);
 $pg         = paginate($total, $perPage, $page, isset($category) ? 'news/category/' . $category['slug'] : 'news');
 $items      = posts($perPage, $pg['offset'], $categoryId);
-$heading    = $category['name'] ?? 'News & Stories';
+$heading    = $category['name'] ?? page_banner('news', 'heading', 'News & Stories');
 ?>
 <?php partial('page-banner', [
     'heading' => $heading,
-    'eyebrow' => 'From the field',
+    'eyebrow' => page_banner('news', 'eyebrow', 'From the field'),
     'crumbs'  => isset($category) ? ['News' => 'news', $category['name'] => null] : ['News' => null],
 ]); ?>
 

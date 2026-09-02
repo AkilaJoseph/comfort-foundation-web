@@ -114,8 +114,13 @@ switch ($section) {
             }
             $values = $_POST['settings'] ?? [];
             if (is_array($values)) {
+                $richtextKeys = array_column(all("SELECT key_name FROM settings WHERE input_type = 'richtext'"), 'key_name');
                 foreach ($values as $key => $val) {
-                    q('UPDATE settings SET value = ? WHERE key_name = ?', [is_string($val) ? trim($val) : '', (string) $key]);
+                    $val = is_string($val) ? trim($val) : '';
+                    if (in_array((string) $key, $richtextKeys, true)) {
+                        $val = safe_html($val);
+                    }
+                    q('UPDATE settings SET value = ? WHERE key_name = ?', [$val, (string) $key]);
                 }
             }
 

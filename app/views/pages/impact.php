@@ -1,5 +1,5 @@
 <?php $stats = impact_stats(); ?>
-<?php partial('page-banner', ['heading' => 'Our Impact', 'eyebrow' => 'Where we are heading', 'crumbs' => ['Impact' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('impact', 'heading', 'Our Impact'), 'eyebrow' => page_banner('impact', 'eyebrow', 'Where we are heading'), 'crumbs' => ['Impact' => null]]); ?>
 
 <section style="padding:100px 0 60px;">
     <div class="container">
@@ -48,19 +48,15 @@
     <div class="container">
         <div class="row justify-content-center"><div class="col-12 col-xl-9">
             <div class="section__header text-center">
-                <span class="sub-title"><i class="icon-donation"></i>How we measure</span>
-                <h2>Accountability is part of the programme</h2>
+                <span class="sub-title"><i class="icon-donation"></i><?= e(setting('impact_measures_eyebrow', 'How we measure')) ?></span>
+                <h2><?= e(setting('impact_measures_heading', 'Accountability is part of the programme')) ?></h2>
             </div>
             <div class="row gutter-30" style="margin-top:34px;">
+                <?php foreach (impact_measures() as $m): ?>
                 <div class="col-12 col-md-4" style="margin-bottom:24px;">
-                    <div class="cf-approach__step"><h4 style="font-size:18px;">Baseline first</h4><p>Every programme begins with a community baseline, so change is measured against a real starting point rather than an assumption.</p></div>
+                    <div class="cf-approach__step"><h4 style="font-size:18px;"><?= e($m['title']) ?></h4><p><?= e($m['text']) ?></p></div>
                 </div>
-                <div class="col-12 col-md-4" style="margin-bottom:24px;">
-                    <div class="cf-approach__step"><h4 style="font-size:18px;">Participant-verified</h4><p>Results are reviewed with the women, caregivers and teachers we work alongside — not only with funders.</p></div>
-                </div>
-                <div class="col-12 col-md-4" style="margin-bottom:24px;">
-                    <div class="cf-approach__step"><h4 style="font-size:18px;">Openly reported</h4><p>Figures on this page are updated as programmes report. Where we have not yet measured something, we say so.</p></div>
-                </div>
+                <?php endforeach; ?>
             </div>
             <div class="text-center" style="margin-top:20px;"><a href="<?= e(url('contact')) ?>" class="btn--primary">Request Our Reports <i class="fa-solid fa-arrow-right"></i></a></div>
         </div></div>

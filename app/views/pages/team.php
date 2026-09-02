@@ -1,5 +1,5 @@
 <?php $crew = team_members(); ?>
-<?php partial('page-banner', ['heading' => 'Our Team', 'eyebrow' => 'The people behind the work', 'crumbs' => ['Team' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('team', 'heading', 'Our Team'), 'eyebrow' => page_banner('team', 'eyebrow', 'The people behind the work'), 'crumbs' => ['Team' => null]]); ?>
 
 <section class="team" style="padding:100px 0;">
     <div class="container">

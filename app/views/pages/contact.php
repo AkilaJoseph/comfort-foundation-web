@@ -1,5 +1,5 @@
 <?php $socials = social_links(); ?>
-<?php partial('page-banner', ['heading' => 'Contact Us', 'eyebrow' => 'Get in touch', 'crumbs' => ['Contact' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('contact', 'heading', 'Contact Us'), 'eyebrow' => page_banner('contact', 'eyebrow', 'Get in touch'), 'crumbs' => ['Contact' => null]]); ?>
 
 <section class="contact-main volunteer" style="padding:100px 0;">
     <div class="container">

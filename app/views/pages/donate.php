@@ -1,4 +1,4 @@
-<?php partial('page-banner', ['heading' => 'Donate', 'eyebrow' => 'Support the work', 'crumbs' => ['Donate' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('donate', 'heading', 'Donate'), 'eyebrow' => page_banner('donate', 'eyebrow', 'Support the work'), 'crumbs' => ['Donate' => null]]); ?>
 
 <section class="community" style="padding:100px 0 60px;">
     <div class="container">
@@ -8,7 +8,7 @@
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
                     <span class="sub-title"><i class="icon-donation"></i>Give with confidence</span>
                     <h2 class="title-animation">Your gift becomes <span>capital, skills and safety</span></h2>
-                    <p>Comfort Foundation is a registered Tanzanian NGO (Reg. No. <?= e(setting('reg_number')) ?>). Give directly to our bank account or by mobile money — then let us know, so we can acknowledge your gift and keep you informed about what it made possible.</p>
+                    <p><?= e(setting('donate_intro', 'Give directly to our bank account or by mobile money — then let us know, so we can acknowledge your gift and keep you informed about what it made possible.')) ?></p>
                 </div>
             </div>
         </div>
@@ -45,13 +45,7 @@
         </div>
 
         <div class="row gutter-30">
-            <?php
-            $uses = [
-                ['icon' => 'icon-fund',          'title' => 'Livelihoods',      'text' => 'Seed capital for savings groups, training materials and start-up support for women-led micro-enterprises.'],
-                ['icon' => 'icon-spread-love',   'title' => 'Family support',   'text' => 'Parenting education sessions, caregiver support groups and home visits for families under pressure.'],
-                ['icon' => 'icon-health',        'title' => 'Child wellbeing',  'text' => 'Safe spaces, psychosocial support and school-based mental health awareness for children.'],
-            ];
-            foreach ($uses as $i => $u): ?>
+            <?php foreach (donate_uses() as $i => $u): ?>
             <div class="col-12 col-md-4" style="margin-bottom:30px;">
                 <div class="cf-pillar<?= $i % 2 ? ' cf-pillar--green' : '' ?>" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="<?= $i * 150 ?>">
                     <span class="cf-pillar__num"><i class="<?= e($u['icon']) ?>"></i></span>

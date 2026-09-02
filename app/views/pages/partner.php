@@ -1,4 +1,4 @@
-<?php partial('page-banner', ['heading' => 'Partner With Us', 'eyebrow' => 'Partnership strategy', 'crumbs' => ['Partner' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('partner', 'heading', 'Partner With Us'), 'eyebrow' => page_banner('partner', 'eyebrow', 'Partnership strategy'), 'crumbs' => ['Partner' => null]]); ?>
 
 <section style="padding:100px 0 60px;">
     <div class="container">

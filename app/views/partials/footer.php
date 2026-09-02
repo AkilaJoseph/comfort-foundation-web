@@ -1,11 +1,16 @@
-<?php $socials = social_links(); ?>
+<?php
+$socials = social_links();
+$footerLinks = all('SELECT * FROM footer_links ORDER BY sort_order, id');
+$footerExplore = array_filter($footerLinks, static fn(array $l): bool => (int) ($l['col'] ?? 0) === 0);
+$footerInvolved = array_filter($footerLinks, static fn(array $l): bool => (int) ($l['col'] ?? 0) === 1);
+?>
 <footer class="footer-two">
     <div class="container">
         <div class="row align-items-center gutter-30">
             <div class="col-12 col-lg-7 col-xxl-6">
                 <div class="footer-two__newsletter-content">
-                    <h3>Stay close to the work</h3>
-                    <p>Occasional updates on our programmes, results and opportunities to help.</p>
+                    <h3><?= e(setting('footer_newsletter_heading', 'Stay close to the work')) ?></h3>
+                    <p><?= e(setting('footer_newsletter_text', 'Occasional updates on our programmes, results and opportunities to help.')) ?></p>
                 </div>
             </div>
             <div class="col-12 col-lg-5 col-xxl-5 offset-xxl-1">
@@ -53,17 +58,14 @@
             <div class="col-12 col-md-6 col-xl-2">
                 <div class="footer-two__widget">
                     <div class="footer-two__widget-intro">
-                        <h5>Explore</h5>
+                        <h5><?= e(setting('footer_explore_heading', 'Explore')) ?></h5>
                         <div class="line"><span class="large-line"></span><span class="small-line"></span><span class="small-line"></span></div>
                     </div>
                     <div class="footer-two__widget-content">
                         <ul>
-                            <li><a href="<?= e(url('about')) ?>"><i class="fa-solid fa-arrow-right"></i>About Us</a></li>
-                            <li><a href="<?= e(url('programs')) ?>"><i class="fa-solid fa-arrow-right"></i>Our Programmes</a></li>
-                            <li><a href="<?= e(url('impact')) ?>"><i class="fa-solid fa-arrow-right"></i>Our Impact</a></li>
-                            <li><a href="<?= e(url('team')) ?>"><i class="fa-solid fa-arrow-right"></i>Our Team</a></li>
-                            <li><a href="<?= e(url('news')) ?>"><i class="fa-solid fa-arrow-right"></i>News &amp; Stories</a></li>
-                            <li><a href="<?= e(url('faq')) ?>"><i class="fa-solid fa-arrow-right"></i>FAQ</a></li>
+                            <?php foreach ($footerExplore as $l): ?>
+                            <li><a href="<?= e(url($l['href'])) ?>"><i class="fa-solid fa-arrow-right"></i><?= e($l['label']) ?></a></li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
@@ -72,17 +74,14 @@
             <div class="col-12 col-md-6 col-xl-3">
                 <div class="footer-two__widget footer-two__widget--alternate">
                     <div class="footer-two__widget-intro">
-                        <h5>Get Involved</h5>
+                        <h5><?= e(setting('footer_involved_heading', 'Get Involved')) ?></h5>
                         <div class="line"><span class="large-line"></span><span class="small-line"></span><span class="small-line"></span></div>
                     </div>
                     <div class="footer-two__widget-content">
                         <ul>
-                            <li><a href="<?= e(url('donate')) ?>"><i class="fa-solid fa-arrow-right"></i>Donate</a></li>
-                            <li><a href="<?= e(url('volunteer')) ?>"><i class="fa-solid fa-arrow-right"></i>Become a Volunteer</a></li>
-                            <li><a href="<?= e(url('partner')) ?>"><i class="fa-solid fa-arrow-right"></i>Partner With Us</a></li>
-                            <li><a href="<?= e(url('events')) ?>"><i class="fa-solid fa-arrow-right"></i>Events</a></li>
-                            <li><a href="<?= e(url('gallery')) ?>"><i class="fa-solid fa-arrow-right"></i>Gallery</a></li>
-                            <li><a href="<?= e(url('contact')) ?>"><i class="fa-solid fa-arrow-right"></i>Contact Us</a></li>
+                            <?php foreach ($footerInvolved as $l): ?>
+                            <li><a href="<?= e(url($l['href'])) ?>"><i class="fa-solid fa-arrow-right"></i><?= e($l['label']) ?></a></li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
@@ -91,7 +90,7 @@
             <div class="col-12 col-md-6 col-xl-3">
                 <div class="footer-two__widget footer-two__widget--alternate">
                     <div class="footer-two__widget-intro">
-                        <h5>Get In Touch</h5>
+                        <h5><?= e(setting('footer_contact_heading', 'Get In Touch')) ?></h5>
                         <div class="line"><span class="large-line"></span><span class="small-line"></span><span class="small-line"></span></div>
                     </div>
                     <div class="footer-two__widget-content footer-two__widget-content--contact">

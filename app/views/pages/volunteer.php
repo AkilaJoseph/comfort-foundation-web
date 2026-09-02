@@ -1,16 +1,5 @@
-<?php
-$areas = [
-    'Training & facilitation',
-    'Financial literacy & savings groups',
-    'Psychosocial support / counselling',
-    'Community mobilisation',
-    'Communications & media',
-    'Monitoring & evaluation',
-    'Administration & finance',
-    'Fundraising & grants',
-];
-?>
-<?php partial('page-banner', ['heading' => 'Become a Volunteer', 'eyebrow' => 'Give your skills and time', 'crumbs' => ['Volunteer' => null]]); ?>
+<?php $areas = volunteer_areas(); ?>
+<?php partial('page-banner', ['heading' => page_banner('volunteer', 'heading', 'Become a Volunteer'), 'eyebrow' => page_banner('volunteer', 'eyebrow', 'Give your skills and time'), 'crumbs' => ['Volunteer' => null]]); ?>
 
 <section class="contact-main volunteer" style="padding:100px 0;">
     <div class="container">
@@ -21,15 +10,14 @@ $areas = [
                     <div class="section__content" data-aos="fade-up" data-aos-duration="1000">
                         <span class="sub-title"><i class="icon-donation"></i>Volunteer with us</span>
                         <h2 class="title-animation">Work alongside <span>women, families and children</span></h2>
-                        <p>Volunteering with Comfort Foundation means real responsibility in real communities. You will work with our programme teams in Nyamagana District and surrounding areas — and you will learn as much as you give.</p>
+                        <p><?= e(setting('volunteer_intro', 'You will work with our programme teams in Nyamagana District and surrounding areas — and you will learn as much as you give.')) ?></p>
                     </div>
 
                     <div class="help__content-list" style="margin-top:26px;">
                         <ul>
-                            <li><i class="fa-solid fa-circle-check"></i> Facilitate training sessions and savings-group meetings</li>
-                            <li><i class="fa-solid fa-circle-check"></i> Support parenting education and caregiver groups</li>
-                            <li><i class="fa-solid fa-circle-check"></i> Help run safe spaces and child wellbeing activities</li>
-                            <li><i class="fa-solid fa-circle-check"></i> Contribute professional skills — finance, media, M&amp;E, admin</li>
+                            <?php foreach (volunteer_highlights() as $h): ?>
+                            <li><i class="fa-solid fa-circle-check"></i> <?= e($h) ?></li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
 

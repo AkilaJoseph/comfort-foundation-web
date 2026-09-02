@@ -291,6 +291,44 @@ function long_term_impact(): array
     return array_column(all('SELECT text FROM long_term_impact ORDER BY sort_order, id'), 'text');
 }
 
+/** "Where your gift goes" cards on the Donate page. */
+function donate_uses(): array
+{
+    return all('SELECT * FROM donate_uses ORDER BY sort_order, id');
+}
+
+/** "How we measure" cards on the Impact page. */
+function impact_measures(): array
+{
+    return all('SELECT * FROM impact_measures ORDER BY sort_order, id');
+}
+
+/** Interest-area checkboxes on the volunteer application form. */
+function volunteer_areas(): array
+{
+    return array_column(all('SELECT title FROM volunteer_areas ORDER BY sort_order, id'), 'title');
+}
+
+/** "What you'll do" bullets on the Volunteer page. */
+function volunteer_highlights(): array
+{
+    return array_column(all('SELECT text FROM volunteer_highlights ORDER BY sort_order, id'), 'text');
+}
+
+/** Eyebrow/heading text for a static page's banner, e.g. page_banner('about', 'heading', 'About'). */
+function page_banner(string $pageKey, string $field, string $default = ''): string
+{
+    static $rows = null;
+    if ($rows === null) {
+        $rows = [];
+        foreach (all('SELECT * FROM page_banners') as $r) {
+            $rows[$r['page_key']] = $r;
+        }
+    }
+    $v = $rows[$pageKey][$field] ?? '';
+    return $v === '' ? $default : (string) $v;
+}
+
 // ---------------------------------------------------------------------
 //  Submissions
 // ---------------------------------------------------------------------

@@ -123,8 +123,8 @@ $slides   = home_slides();
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-8">
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>Core business areas</span>
-                    <h2 class="title-animation">Three focus areas, one <span>connected</span> model</h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('home_programs_eyebrow', 'Core business areas')) ?></span>
+                    <h2 class="title-animation"><?= setting('home_programs_title', 'Three focus areas, one <span>connected</span> model') ?></h2>
                     <p>Comfort Foundation's work is structured around three interconnected focus areas, united by a shared commitment to women-led community transformation.</p>
                 </div>
             </div>
@@ -146,8 +146,8 @@ $slides   = home_slides();
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-8">
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>Our approach</span>
-                    <h2>Equip &middot; Strengthen &middot; Transform</h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('home_approach_eyebrow', 'Our approach')) ?></span>
+                    <h2><?= setting('home_approach_title', 'Equip &middot; Strengthen &middot; Transform') ?></h2>
                 </div>
             </div>
         </div>
@@ -195,8 +195,8 @@ $slides   = home_slides();
                     <div class="cta-section__group" data-aos="fade-up" data-aos-duration="1000">
                         <div class="thumb"><i class="icon-spread-love"></i></div>
                         <div class="content">
-                            <span>Give your skills and time</span>
-                            <h3>Become a volunteer</h3>
+                            <span><?= e(setting('home_volunteer_cta_eyebrow', 'Give your skills and time')) ?></span>
+                            <h3><?= e(setting('home_volunteer_cta_title', 'Become a volunteer')) ?></h3>
                         </div>
                         <div class="cta-s"><a href="<?= e(url('volunteer')) ?>" class="btn--tertiary">Apply Now</a></div>
                     </div>
@@ -205,7 +205,7 @@ $slides   = home_slides();
             </div>
             <div class="col-12 col-xxl-4">
                 <div class="cta-section__center cta-section__single">
-                    <div class="cta-img"><img src="<?= e(asset('uploads/media/cf-tailoring-workshop-wide.webp')) ?>" alt="Women at work in a Comfort Foundation tailoring group" class="parallax-image" loading="lazy"></div>
+                    <div class="cta-img"><img src="<?= e(media(setting('home_cta_photo'), 'uploads/media/cf-tailoring-workshop-wide.webp')) ?>" alt="Women at work in a Comfort Foundation tailoring group" class="parallax-image" loading="lazy"></div>
                 </div>
             </div>
             <div class="col-12 col-xxl-4">
@@ -213,8 +213,8 @@ $slides   = home_slides();
                     <div class="cta-section__group" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
                         <div class="thumb"><i class="icon-donation-card"></i></div>
                         <div class="content">
-                            <span>Bank transfer or mobile money</span>
-                            <h3>Make a donation</h3>
+                            <span><?= e(setting('home_donate_cta_eyebrow', 'Bank transfer or mobile money')) ?></span>
+                            <h3><?= e(setting('home_donate_cta_title', 'Make a donation')) ?></h3>
                         </div>
                         <div class="cta-s"><a href="<?= e(url('donate')) ?>" class="btn--primary">Donate Now</a></div>
                     </div>
@@ -231,8 +231,8 @@ $slides   = home_slides();
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-7">
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>What guides us</span>
-                    <h2 class="title-animation">Our core <span>values</span></h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('home_values_eyebrow', 'What guides us')) ?></span>
+                    <h2 class="title-animation"><?= setting('home_values_title', 'Our core <span>values</span>') ?></h2>
                 </div>
             </div>
         </div>
@@ -257,8 +257,8 @@ $slides   = home_slides();
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-7">
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>The people behind the work</span>
-                    <h2 class="title-animation">Meet our <span>team</span></h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('home_team_eyebrow', 'The people behind the work')) ?></span>
+                    <h2 class="title-animation"><?= setting('home_team_title', 'Meet our <span>team</span>') ?></h2>
                 </div>
             </div>
         </div>
@@ -281,8 +281,8 @@ $slides   = home_slides();
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-xl-7">
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>In their words</span>
-                    <h2 class="title-animation">Voices from the <span>community</span></h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('home_testimonials_eyebrow', 'In their words')) ?></span>
+                    <h2 class="title-animation"><?= setting('home_testimonials_title', 'Voices from the <span>community</span>') ?></h2>
                 </div>
             </div>
         </div>
@@ -323,8 +323,8 @@ $slides   = home_slides();
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-xl-7">
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>What's coming up</span>
-                    <h2 class="title-animation">Upcoming <span>events</span></h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('home_events_eyebrow', "What's coming up")) ?></span>
+                    <h2 class="title-animation"><?= setting('home_events_title', 'Upcoming <span>events</span>') ?></h2>
                 </div>
             </div>
         </div>
@@ -347,8 +347,8 @@ $slides   = home_slides();
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-xl-7">
                 <div class="section__header text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <span class="sub-title"><i class="icon-donation"></i>From the field</span>
-                    <h2 class="title-animation">Latest <span>news</span> &amp; stories</h2>
+                    <span class="sub-title"><i class="icon-donation"></i><?= e(setting('home_news_eyebrow', 'From the field')) ?></span>
+                    <h2 class="title-animation"><?= setting('home_news_title', 'Latest <span>news</span> &amp; stories') ?></h2>
                 </div>
             </div>
         </div>
@@ -371,7 +371,7 @@ $slides   = home_slides();
 <div class="partner" style="padding:40px 0 90px;">
     <div class="container">
         <div class="row"><div class="col-12">
-            <div class="section__header text-center" style="margin-bottom:36px;"><span class="sub-title"><i class="icon-donation"></i>We work with</span></div>
+            <div class="section__header text-center" style="margin-bottom:36px;"><span class="sub-title"><i class="icon-donation"></i><?= e(setting('home_partners_eyebrow', 'We work with')) ?></span></div>
             <div class="partner__slider swiper">
                 <div class="swiper-wrapper">
                     <?php foreach ($prts as $pt): ?>

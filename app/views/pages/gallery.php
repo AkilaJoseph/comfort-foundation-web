@@ -1,5 +1,5 @@
 <?php $items = gallery_items(); $cats = gallery_categories(); ?>
-<?php partial('page-banner', ['heading' => 'Gallery', 'eyebrow' => 'Our work in pictures', 'crumbs' => ['Gallery' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('gallery', 'heading', 'Gallery'), 'eyebrow' => page_banner('gallery', 'eyebrow', 'Our work in pictures'), 'crumbs' => ['Gallery' => null]]); ?>
 
 <section style="padding:100px 0;">
     <div class="container">

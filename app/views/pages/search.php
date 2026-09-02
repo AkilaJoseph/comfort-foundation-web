@@ -6,7 +6,7 @@ $total   = $term !== '' ? posts_count(null, $term) : 0;
 $pg      = paginate($total, $perPage, $page, 'search');
 $items   = $term !== '' ? posts($perPage, $pg['offset'], null, $term) : [];
 ?>
-<?php partial('page-banner', ['heading' => 'Search', 'eyebrow' => 'Find something', 'crumbs' => ['Search' => null]]); ?>
+<?php partial('page-banner', ['heading' => page_banner('search', 'heading', 'Search'), 'eyebrow' => page_banner('search', 'eyebrow', 'Find something'), 'crumbs' => ['Search' => null]]); ?>
 
 <section style="padding:100px 0;">
     <div class="container">
