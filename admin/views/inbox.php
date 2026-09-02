@@ -25,6 +25,7 @@ $rows  = all('SELECT * FROM submissions' . $where . ' ORDER BY created_at DESC L
 <?php if (!$rows): ?>
     <div class="empty"><i class="fa-solid fa-inbox"></i><p>Nothing here yet.</p></div>
 <?php else: ?>
+<div class="table-scroll">
 <table>
     <thead><tr><th style="width:110px">Type</th><th>From</th><th>Subject</th><th style="width:140px">Received</th><th style="width:150px"></th></tr></thead>
     <tbody>
@@ -51,6 +52,7 @@ $rows  = all('SELECT * FROM submissions' . $where . ' ORDER BY created_at DESC L
     <?php endforeach; ?>
     </tbody>
 </table>
+</div>
 <?php endif; ?>
 </div>
 

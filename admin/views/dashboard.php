@@ -30,6 +30,7 @@ $drafts  = all('SELECT id, title FROM posts WHERE is_published = 0 ORDER BY id D
         <?php if (!$recent): ?>
             <div class="empty"><i class="fa-solid fa-inbox"></i><p>No submissions yet.</p></div>
         <?php else: ?>
+        <div class="table-scroll">
         <table>
             <tbody>
             <?php foreach ($recent as $r): ?>
@@ -44,6 +45,7 @@ $drafts  = all('SELECT id, title FROM posts WHERE is_published = 0 ORDER BY id D
             <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
         <?php endif; ?>
     </div>
 

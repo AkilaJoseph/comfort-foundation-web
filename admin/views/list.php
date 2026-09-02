@@ -34,7 +34,7 @@ foreach ($def['fields'] as $n => $f) {
 ?>
 
 <div class="bar">
-    <form method="get" action="<?= e(url('admin/' . $section)) ?>" style="display:flex;gap:8px;max-width:360px;flex:1">
+    <form method="get" action="<?= e(url('admin/' . $section)) ?>" class="bar__search">
         <input type="search" name="q" value="<?= e($search) ?>" placeholder="Search <?= e(strtolower($def['label'])) ?>…">
         <button class="btn btn--ghost" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
     </form>
@@ -49,6 +49,7 @@ foreach ($def['fields'] as $n => $f) {
         <a class="btn" href="<?= e(url('admin/' . $section . '/create')) ?>" style="margin-top:14px"><i class="fa-solid fa-plus"></i> Add the first one</a>
     </div>
 <?php else: ?>
+<div class="table-scroll">
 <table>
     <thead>
         <tr>
@@ -104,6 +105,7 @@ foreach ($def['fields'] as $n => $f) {
     <?php endforeach; ?>
     </tbody>
 </table>
+</div>
 <?php endif; ?>
 </div>
 

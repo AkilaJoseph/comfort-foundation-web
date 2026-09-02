@@ -15,8 +15,10 @@
 </head>
 <body>
 <div class="wrap">
-    <aside class="side">
+    <div class="side-overlay" id="sideOverlay"></div>
+    <aside class="side" id="side">
         <div class="side__brand">
+            <button type="button" class="side__close" id="sideClose" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
             <img src="<?= e(asset('assets/images/logo/logo-light.webp')) ?>" alt="<?= e(setting('site_name')) ?>">
             <span>Content Manager</span>
         </div>
@@ -46,7 +48,10 @@
 
     <div class="main">
         <header class="top">
-            <h1><?= e($title ?? 'Admin') ?></h1>
+            <div class="top__left">
+                <button type="button" class="menu-toggle" id="menuToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+                <h1><?= e($title ?? 'Admin') ?></h1>
+            </div>
             <div class="top__right">
                 <form method="post" action="<?= e(url('admin/cache')) ?>" style="display:inline">
                     <?= csrf_field() ?>
@@ -73,6 +78,31 @@ document.addEventListener('click', function (ev) {
   var btn = ev.target.closest('[data-confirm]');
   if (btn && !confirm(btn.getAttribute('data-confirm'))) { ev.preventDefault(); }
 });
+
+(function () {
+  var side = document.getElementById('side');
+  var overlay = document.getElementById('sideOverlay');
+  var openBtn = document.getElementById('menuToggle');
+  var closeBtn = document.getElementById('sideClose');
+  if (!side || !overlay || !openBtn) { return; }
+
+  function openMenu() {
+    side.classList.add('is-open');
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    side.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', openMenu);
+  overlay.addEventListener('click', closeMenu);
+  if (closeBtn) { closeBtn.addEventListener('click', closeMenu); }
+  side.querySelectorAll('nav a').forEach(function (a) { a.addEventListener('click', closeMenu); });
+  window.addEventListener('resize', function () { if (window.innerWidth > 900) { closeMenu(); } });
+})();
 </script>
 <script src="<?= e(asset('admin/assets/vendor/cropper.min.js')) ?>"></script>
 <script src="<?= e(asset('admin/assets/admin-cropper.js')) ?>"></script>
